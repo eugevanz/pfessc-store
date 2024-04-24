@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{%block title%}{%endblock%}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/uikit.min.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"/>
+    <script src="{{url_for('static', filename='js/htmx.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/uikit.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/uikit-icons.min.js')}}"></script>
+</head>
+<body class="base-body">
+
+<!--<p class="page-title uk-light uk-text-right">{{ get_current_page_name() }}</p>-->
+<ul class="page-title uk-breadcrumb">
+    <li><a href="/">Home</a></li>
+    {% for path in get_current_page_name() %}
+    {% set current_url = '/' ~ path %}
+    {% if loop.last %}
+    <li><span>{{ path }}</span></li>
+    {% else %}
+    <li><a href="{{current_url}}">{{path}}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+<div class="uk-text-center uk-position-top-left uk-position-fixed uk-background-default uk-padding-small"
+     style="z-index: 1000;">
+
+    <a class="uk-navbar-toggle uk-navbar-toggle-animate" href
+       data-uk-navbar-toggle-icon></a>
+    <div class="uk-dropbar uk-dropbar-right" data-uk-drop="stretch: x">
+
+        <div class="uk-child-width-1-2@m uk-padding" data-uk-grid>
+            <div class="uk-card uk-card-body uk-width-auto@m">
+                <ul class="uk-nav-default" data-uk-nav>
+                    {%for item in menu_items%}
+                    <li><a href="{{item['url']}}">{{item['label']}}</a></li>
+                    {% endfor %}
+                    <li class="uk-nav-divider"></li>
+                    {% for menu in accordion %}
+                    <li class="uk-parent">
+                        <a href="#">{{menu['title']}} <span
+                                data-uk-nav-parent-icon="true"></span></a>
+                        <ul class="uk-nav-sub">
+                            {% for item in menu['submenu'] %}
+                            <li><a href="#">{{ item }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="uk-position-relative">
+    {% block content %}{% endblock %}
+    <div class="uk-position-top">
+        <nav class="uk-navbar-container uk-navbar-transparent uk-padding-small">
+            <div class="uk-container">
+                <div data-uk-navbar>
+
+                    <div class="uk-navbar-left">
+                        <ul class="uk-navbar-nav uk-margin-large-left">
+                            <li>
+                                <a href="/" class="uk-flex uk-flex-middle">
+                                    <span class="uk-text-large uk-text-bold" style="letter-spacing: 3px;">PfessC</span>
+                                    <div class="uk-margin-small-right"
+                                         style="width: 2px; height: 44px; background-color: #EFCB68; margin-left: 4px;"></div>
+                                    <span class="uk-text-small"
+                                          style="color: #EFCB68; letter-spacing: 6px;">BRANDING</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="uk-navbar-right">
+
+                        <ul class="uk-navbar-nav">
+                            <li>{% block search %}{% endblock %}</li>
+                        </ul>
+                        <ul class="uk-iconnav">
+                            <li><a href="#"><span data-uk-icon="icon: user"></span> (2)</a></li>
+                            <li><a href="#"><span data-uk-icon="icon: cart"></span> ({{ cart }})</a></li>
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="uk-section uk-section-large uk-section-muted">
+    <div class="uk-container">
+
+        <h3 class="uk-flex uk-flex-middle">
+            <span class="uk-text-large uk-text-bold" style="letter-spacing: 3px;">PfessC</span>
+            <span class="uk-margin-small-right"
+                  style="width: 2px; height: 44px; background-color: #EFCB68; margin-left: 7px;"></span>
+            <span class="uk-text-small"
+                  style="color: #EFCB68; letter-spacing: 6px;">BRANDING</span>
+        </h3>
+
+        <div class="uk-grid-match uk-child-width-1-3@m" data-uk-grid>
+            <div>
+                <ul class="uk-list uk-link-text">
+                    {% for linkName in ['About Us', 'FAQ\'s', 'Shopping & Returns', 'Terms of Service', 'Privacy
+                    Policy', 'Contact Us'] %}
+                    <li><a href="#">{{ linkName }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <ul class="uk-list">
+                    <li><span class="uk-margin-small-right" data-uk-icon="mail"></span> sales@pfessc.co.za</li>
+                    <li><span class="uk-margin-small-right" data-uk-icon="comment"></span> 0678817625</li>
+                    <li><span class="uk-margin-small-right" data-uk-icon="receiver"></span> 0659027397</li>
+                </ul>
+            </div>
+            <div>
+                <p class="uk-text-lead">Streamlining Your Success with Effortless Branding Solutions.</p>
+                <form>
+
+                    <div class="uk-margin">
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" data-uk-icon="icon: mail"></span>
+                            <input class="uk-input uk-form-width-large uk-form-large uk-border-rounded" type="text"
+                                   placeholder="your@email.address"
+                                   aria-label="Large">
+                        </div>
+                    </div>
+                    <p class="uk-text-meta">We'll never share your email with anyone else.</p>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

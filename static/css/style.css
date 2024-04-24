@@ -1,0 +1,22 @@
+.page-title {
+    border: 1px solid #EFCB68;
+    transform: rotate(90deg);
+    transform-origin: left bottom;
+    top: 60px;
+    left: 0px;
+    letter-spacing: 3px;
+    background: white;
+    z-index: 1000;
+    padding: 13px;
+    position: fixed;
+}
+.uk-section {
+    padding-left: 50px;
+}
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+.base-body {
+    animation: fadeIn 2s ease-out 0s 1 forwards;
+}
