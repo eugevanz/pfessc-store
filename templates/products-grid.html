@@ -9,18 +9,10 @@
                          width="1024" height="1024" alt="">
                 </div>
                 <div class="uk-card-body">
-                    <div style="padding: 8px;">
-                        <div class="uk-card-title"
-                             style="height: 44px; font-size: 0.8em; line-height: 1.2; overflow: hidden;">
-                            {{item.productName|default('No product name')}}
-                        </div>
-                        <div class="uk-text-small uk-text-muted uk-text-uppercase uk-margin-small"
-                             style="font-size: 0.7em;">{{item.brand.name|default('_')}}
-                        </div>
-                        <div class="uk-text-bold">R {{prices|selectattr('fullCode', 'equalto',
-                            item.fullCode)|map(attribute='price')|first|default('POA')}}
-                        </div>
-                    </div>
+                    <div class="uk-card-title" style="height: 44px; font-size: 0.8em; line-height: 1.2; overflow: hidden;">{{item.productName|default('No product name')}}</div>
+                        <div class="uk-text-small uk-text-muted uk-text-uppercase uk-margin-small" style="font-size: 0.7em;">{{item.brand.name|default('_')}}</div>
+                        <div class="uk-text-bold">R {{prices|selectattr('fullCode', 'equalto', item.fullCode)|map(attribute='price')|first|default('POA')}}</div>
+                        <a class="uk-link-muted" href style="font-size: 0.8em;">...More</a>
                 </div>
                 <div class="uk-card-footer uk-margin-top uk-flex uk-flex-middle">
                     <a class="uk-button uk-button-default uk-text-nowrap uk-padding-remove uk-border-rounded

@@ -10,12 +10,13 @@
                     </div>
                     <div class="uk-margin-auto-vertical uk-margin-auto uk-width-1-3@s">
                         <div class="uk-card-body uk-width-large">
-                            <div style="padding: 8px;">
+                            <div>
                                 <div class="uk-card-title uk-text-bold uk-margin" style="line-height: 1.2;">{{item.productName|default('No product name')}}</div>
                                 <div class="uk-text-small uk-text-muted uk-text-uppercase uk-margin-small" style="font-size: 0.7em;">{{item.brand.name|default('')}}</div>
                                 <div class="uk-text-bold">R {{prices|selectattr('fullCode', 'equalto',
                                     item.fullCode)|map(attribute='price')|first|default('POA')}}</div>
-                                <div class="uk-margin uk-height-small" style="font-size: 0.8em; line-height: 1.2; overflow: hidden;" hx-get="/description/{{item.fullCode}}" hx-target="this" hx-trigger="load"></div>
+                                <div class="uk-margin" style="font-size: 0.8em; line-height: 1.2; height: 60px; overflow: hidden;" hx-get="/description/{{item.fullCode}}" hx-target="this" hx-trigger="load"></div>
+                                <a class="uk-link-muted" href style="font-size: 0.8em;">...More</a>
                             </div>
                             <div class="uk-margin-top uk-flex uk-flex-middle uk-width-medium">
                                 <a class="uk-button uk-button-default uk-button-large uk-text-nowrap uk-padding-remove uk-border-rounded uk-margin-small-right uk-width-expand" href="/product-detail/{{item['simpleCode']}}" style="border: 1px solid #2B3A67;">Buy now</a>

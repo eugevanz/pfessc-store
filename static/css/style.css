@@ -1,5 +1,7 @@
-.page-title {
-    border: 1px solid #EFCB68;
+/* .uk-breadcrumb {
+    border-width: 1px 1px 0 1px;
+    border-color: #EFCB68;
+    border-style: solid;
     transform: rotate(90deg);
     transform-origin: left bottom;
     top: 60px;
@@ -9,7 +11,13 @@
     z-index: 1000;
     padding: 12px;
     position: fixed;
-}
+} */
+/* .uk-navbar-toggle {
+    border-width: 1px 1px 0 1px;
+    border-color: #EFCB68;
+    border-style: solid;
+    padding: 12px;
+} */
 .uk-slider-container-offset {
     padding-top: 100px;
 }

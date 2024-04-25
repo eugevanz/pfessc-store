@@ -13,23 +13,11 @@
 <body class="base-body">
 
 <!--<p class="page-title uk-light uk-text-right">{{ get_current_page_name() }}</p>-->
-<ul class="page-title uk-breadcrumb">
-    <li><a href="/">Home</a></li>
-    {% for path in get_current_page_name() %}
-    {% set current_url = '/' ~ path %}
-    {% if loop.last %}
-    <li><span>{{ path }}</span></li>
-    {% else %}
-    <li><a href="{{current_url}}">{{path}}</a></li>
-    {% endif %}
-    {% endfor %}
-</ul>
 
-<div class="uk-text-center uk-position-top-left uk-position-fixed uk-background-default uk-padding-small"
-     style="z-index: 1000;">
 
-    <a class="uk-navbar-toggle uk-navbar-toggle-animate" href
-       data-uk-navbar-toggle-icon></a>
+<div class="uk-text-center uk-position-top-left uk-position-fixed uk-background-default uk-padding-small" style="z-index: 1000;">
+
+    <a class="uk-navbar-toggle uk-navbar-toggle-animate" href data-uk-navbar-toggle-icon></a>
     <div class="uk-dropbar uk-dropbar-right" data-uk-drop="stretch: x">
 
         <div class="uk-child-width-1-2@m uk-padding" data-uk-grid>
@@ -41,8 +29,7 @@
                     <li class="uk-nav-divider"></li>
                     {% for menu in accordion %}
                     <li class="uk-parent">
-                        <a href="#">{{menu['title']}} <span
-                                data-uk-nav-parent-icon="true"></span></a>
+                        <a href="#">{{menu['title']}} <span data-uk-nav-parent-icon="true"></span></a>
                         <ul class="uk-nav-sub">
                             {% for item in menu['submenu'] %}
                             <li><a href="#">{{ item }}</a></li>
@@ -96,6 +83,18 @@
         </nav>
     </div>
 </div>
+
+<ul class="uk-breadcrumb">
+    <li><a href="/">Home</a></li>
+    {% for path in get_current_page_name() %}
+    {% set current_url = '/' ~ path %}
+    {% if loop.last %}
+    <li><span>{{ path }}</span></li>
+    {% else %}
+    <li><a href="{{current_url}}">{{path}}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>
 
 <div class="uk-section uk-section-large uk-section-muted">
     <div class="uk-container">
