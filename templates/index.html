@@ -1,19 +1,37 @@
-<head>
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-
-<body>
-    <div class="App">
-        <header class="App-header">
-            <img src="{{ url_for('static', filename='Octocat.png') }}" class="App-logo" alt="logo" />
-            <p>
-                GitHub Codespaces <span class="heart">♥️</span> Flask
-            </p>
-            <p class="small">
-                Edit <code>templates/index.html</code> and refresh to see your changes!
-            </p>
-        </header>
+{%extends "base.html"%}
+{%block title%}PFESSC Branding{%endblock%}
+{%block content%}
+{%include 'products-slider.html'%}
+<div class="uk-section uk-section-large">
+    <div class="uk-container">
+    <p class="uk-text-lead uk-margin-large" uk-margin>
+        Featured products
+        <a href="/Shop All" class="uk-button uk-light uk-button-small uk-border-rounded"
+           style="background-color: #2B3A67;">Shop all</a>
+    </p>
+    {%include 'products-grid.html'%}
     </div>
-</body>
-
-</html>
+</div>
+{%include 'collections-grid.html'%}
+<div class="uk-section uk-section-large" style="background-color: #EFCB68;">
+    <div class="uk-container">
+        <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@m uk-margin" data-uk-grid
+             style="background-color: #EFCB68;">
+            <div class="uk-card-media-left uk-cover-container">
+                <img src="" alt="" data-uk-cover>
+                <canvas width="600" height="600"></canvas>
+            </div>
+            <div>
+                <div class="uk-card-body">
+                    <h3 class="uk-card-title">Branding in 24 hours</h3>
+                    <h1 class="uk-text-bold uk-light">HAVE AN EMERGENCY or UNPLANNED ORDER?</h1>
+                    <p class="uk-text-bold uk-width-large">Experience Lightning-Fast Branding on over 170 Popular Products with LOGO24!</p>
+                    <p>LOGO24 is an extraordinary new initiative that offers "next day" turnaround including branding on over 170 of our most popular products when you need branded products super-fast!</p>
+                    <a href="#" class="uk-button uk-button-secondary">LOGO24 items</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%include 'suppliers-grid.html'%}
+{%endblock%}
