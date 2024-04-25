@@ -1,8 +1,8 @@
-<div class="uk-slider-container-offset" uk-slider="autoplay: true">
+<div class="uk-slider-container" uk-slider="autoplay: true">
     <div class="uk-position-relative uk-visible-toggle" tabindex="-1">
         <div class="uk-slider-items uk-grid">
             {%for item in products%}
-            <div class="uk-width-1-1">
+            <div>
                 <div class="uk-card uk-card-large uk-grid-collapse uk-child-width-1-2@s" uk-grid>
                     <div class="uk-card-media-left uk-cover-container uk-width-2-3@s">
                         <img src="{{item.images[0].urls[0].url|default(url_for('static', filename='assets/images/2B3A67.png'))}}" alt="" uk-cover>
@@ -15,7 +15,7 @@
                                 <div class="uk-text-small uk-text-muted uk-text-uppercase uk-margin-small" style="font-size: 0.7em;">{{item.brand.name|default('')}}</div>
                                 <div class="uk-text-bold">R {{prices|selectattr('fullCode', 'equalto',
                                     item.fullCode)|map(attribute='price')|first|default('POA')}}</div>
-                                <div class="uk-margin uk-height-max-medium" style="font-size: 0.8em; line-height: 1.2; overflow: hidden;" hx-get="/description/{{item.fullCode}}" hx-target="this" hx-trigger="load"></div>
+                                <div class="uk-margin uk-height-small" style="font-size: 0.8em; line-height: 1.2; overflow: hidden;" hx-get="/description/{{item.fullCode}}" hx-target="this" hx-trigger="load"></div>
                             </div>
                             <div class="uk-margin-top uk-flex uk-flex-middle uk-width-medium">
                                 <a class="uk-button uk-button-default uk-button-large uk-text-nowrap uk-padding-remove uk-border-rounded uk-margin-small-right uk-width-expand" href="/product-detail/{{item['simpleCode']}}" style="border: 1px solid #2B3A67;">Buy now</a>
