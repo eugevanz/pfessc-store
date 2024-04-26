@@ -3,7 +3,7 @@
         data-uk-scrollspy="cls: uk-animation-scale-up uk-transform-origin-top-center; target: .uk-card; delay: 100; repeat: true">
         {%for item in products%}
         <li>
-            <div class="uk-card uk-card-small" style="width: 216px;">
+            <div class="uk-card uk-card-small uk-border-rounded style="width: 216px;">
                 <div class="uk-card-media-top uk-flex uk-flex-center">
                     <img src="{{item.images[0].urls[0].url|default(url_for('static', filename='assets/images/2B3A67.png'))}}"
                          width="1024" height="1024" alt="">
@@ -12,18 +12,14 @@
                     <div class="uk-card-title" style="height: 44px; font-size: 0.8em; line-height: 1.2; overflow: hidden;">{{item.productName|default('No product name')}}</div>
                         <div class="uk-text-small uk-text-muted uk-text-uppercase uk-margin-small" style="font-size: 0.7em;">{{item.brand.name|default('_')}}</div>
                         <div class="uk-text-bold">R {{prices|selectattr('fullCode', 'equalto', item.fullCode)|map(attribute='price')|first|default('POA')}}</div>
-                        <a class="uk-link-muted" href style="font-size: 0.8em;">...More</a>
-                </div>
-                <div class="uk-card-footer uk-margin-top uk-flex uk-flex-middle">
-                    <a class="uk-button uk-button-default uk-text-nowrap uk-padding-remove uk-border-rounded
-                                uk-margin-small-right uk-width-expand" href="/product-detail/{{item['simpleCode']}}"
-                       style="border: 1px solid #2B3A67;">Buy now
-                    </a>
-                    <a class="uk-button uk-button-primary uk-border-rounded uk-text-nowrap"
-                       href="/add-to-cart/{{item['simpleCode']}}"
-                       style="padding-left: 12px; padding-right: 12px;">
-                        <span data-uk-icon="icon: cart"></span>+
-                    </a>
+                        <div class="uk-margin-top uk-flex uk-flex-middle">
+                            <a class="uk-button uk-button-default uk-padding-remove uk-border-rounded uk-margin-small-right uk-width-expand" href="/product-detail/{{item['simpleCode']}}" style="border: 1px solid #2B3A67;">Buy now</a>
+                            <a class="uk-button uk-button-primary uk-border-rounded uk-text-nowrap"
+                               href="/add-to-cart/{{item['simpleCode']}}"
+                               style="padding-left: 12px; padding-right: 12px;">
+                                <span data-uk-icon="icon: cart"></span>+
+                            </a>
+                        </div>
                 </div>
             </div>
         </li>
