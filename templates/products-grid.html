@@ -3,7 +3,7 @@
         data-uk-scrollspy="cls: uk-animation-scale-up uk-transform-origin-top-center; target: .uk-card; delay: 100; repeat: true">
         {%for item in products%}
         <li>
-            <div class="uk-card uk-card-small uk-border-rounded style="width: 216px;">
+            <div class="uk-card uk-card-small uk-border-rounded uk-width-medium">
                 <div class="uk-card-media-top uk-flex uk-flex-center">
                     <img src="{{item.images[0].urls[0].url|default(url_for('static', filename='assets/images/2B3A67.png'))}}"
                          width="1024" height="1024" alt="">
