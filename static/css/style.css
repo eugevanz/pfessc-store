@@ -18,9 +18,6 @@
     border-style: solid;
     padding: 12px;
 } */
-.uk-slider-container-offset {
-    padding-top: 100px;
-}
 @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }

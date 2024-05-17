@@ -1,9 +1,7 @@
-<div class="uk-section uk-section-large" style="padding-top: 128px;">
+<div class="uk-section">
     <div class="uk-container">
-        <div class="uk-grid-medium" data-uk-grid>
-            {%include 'product-filter.html'%}
-            {%include 'product-grid.html'%}
-            {%include 'pagination.html'%}
-        </div>
+        <p class="uk-text-lead uk-text-center uk-margin-large uk-text-uppercase" style="letter-spacing: 3px;">Shop all
+            products</p>
+        <div id="products-grid" hx-get="/products-grid" hx-trigger="load"></div>
     </div>
 </div>

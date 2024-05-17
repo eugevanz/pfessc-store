@@ -1,38 +1,36 @@
-{%extends "base.html"%}
-{%block title%}PFESSC Branding{%endblock%}
-{%block content%}
-<div class="uk-section uk-section-large">
-    {%include 'products-slider.html'%}
-</div>
-<div class="uk-section uk-section-large">
+<div hx-get="/products-slider" hx-trigger="load"></div>
+<div class="uk-section">
     <div class="uk-container">
-        <p class="uk-text-lead uk-margin-large" uk-margin>
+        <p class="uk-text-lead uk-text-center uk-margin-large uk-text-uppercase" style="letter-spacing: 3px;">
             Featured products
-            <a href="/Shop All" class="uk-button uk-light uk-button-small uk-border-rounded"
+            <a href hx-get="/products" hx-target="#content"
+               class="uk-button uk-light uk-button-small uk-border-rounded"
                style="background-color: #2B3A67;">Shop all</a>
         </p>
-        {%include 'products-grid.html'%}
+        <div hx-get="/products-grid?is_feat=True" hx-trigger="load"></div>
     </div>
 </div>
-<div class="uk-section uk-section-large" style="background: #e1efe6; padding-top: 128px;">
+<div class="uk-section" style="background: #e1efe6;">
     <div class="uk-container">
-        <p class="uk-text-lead uk-margin-large" uk-margin>
+        <p class="uk-text-lead uk-text-center uk-margin-large uk-text-uppercase" style="letter-spacing: 3px;">
             Collections
-            <a href="/Collections" class="uk-button uk-light uk-button-small uk-border-rounded"
+            <a href hx-get="/collections" hx-target="#content"
+               class="uk-button uk-light uk-button-small uk-border-rounded"
                style="background-color: #2B3A67;">See all</a>
         </p>
-        {%include 'collections-grid.html'%}
+        <div hx-get="/collections-grid?is_feat=True" hx-trigger="load"></div>
     </div>
 </div>
-<div class="uk-section uk-section-large" style="background-color: #EFCB68;">
+<div class="uk-section" style="background-color: #EFCB68;">
     <div class="uk-container">
-        <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@m uk-margin" data-uk-grid
+        <div class="uk-card uk-grid-collapse uk-child-width-1-2@m uk-margin" data-uk-grid
              style="background-color: #EFCB68;">
             <div class="uk-card-media-left uk-cover-container">
-                <img src="" alt="" data-uk-cover>
+                <img src="https://inyllwqsghzahwjosayv.supabase.co/storage/v1/object/public/Misc/BRANDING-6_b2299235-2b1e-4173-b041-6119e42dc162.png?t=2024-05-07T06%3A14%3A14.089Z"
+                     alt="" uk-cover>
                 <canvas width="600" height="600"></canvas>
             </div>
-            <div>
+            <div class="uk-margin-auto-vertical">
                 <div class="uk-card-body">
                     <h3 class="uk-card-title">Branding in 24 hours</h3>
                     <h1 class="uk-text-bold uk-light">HAVE AN EMERGENCY or UNPLANNED ORDER?</h1>
@@ -46,5 +44,9 @@
         </div>
     </div>
 </div>
-{%include 'suppliers-grid.html'%}
-{%endblock%}
+<div class="uk-section">
+    <div class="uk-container">
+        <p class="uk-text-lead uk-text-center uk-margin-large uk-text-uppercase" style="letter-spacing: 3px;">Brands</p>
+        <div hx-get="/suppliers-grid" hx-trigger="load"></div>
+    </div>
+</div>
