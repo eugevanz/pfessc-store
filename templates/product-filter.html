@@ -1,123 +1,158 @@
-<div class="uk-width-1-6@l uk-width-1-5@m uk-width-1-4@s uk-visible@s">
+<div>
+    <form class="uk-search uk-search-default uk-margin-large-bottom">
+        <span uk-search-icon></span>
+        <input class="uk-search-input" type="search" placeholder="Search" aria-label="Search">
+    </form>
     <form>
         <fieldset class="uk-fieldset">
-            <legend class="uk-legend uk-margin-large-bottom">Filters</legend>
-            <div class="uk-flex uk-flex-between uk-flex-middle" style="font-size: 0.7em; padding-bottom: 4px">
-                <div>Gender</div>
-                <div class="uk-inline">
-                    <a href><span uk-drop-parent-icon></span></a>
-                    <div class="uk-card uk-card-body uk-card-default" uk-drop="mode: click">Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-                    </div>
-                </div>
-            </div>
-            <div uk-margin>
-                <span class="uk-badge" style="font-size: 0.7em; padding: 12px;">
-                    <span>Ladies</span>
-                    <a href class="uk-margin-small-left" uk-icon="icon: close; ratio: 0.6;"></a>
-                </span>
-            </div>
-            <hr>
-            <div class="uk-flex uk-flex-between uk-flex-middle" style="font-size: 0.7em; padding-bottom: 4px">
-                <div>Material</div>
-                <div class="uk-inline">
-                    <a href><span uk-drop-parent-icon></span></a>
-                    <div class="uk-card uk-card-body uk-card-default" uk-drop="mode: click">Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-                    </div>
-                </div>
-            </div>
-            <div uk-margin>
-                <span class="uk-badge" style="font-size: 0.7em; padding: 12px;">
-                    <span>Polyester and Spandex</span>
-                    <a href class="uk-margin-small-left" uk-icon="icon: close; ratio: 0.6;"></a>
-                </span>
-            </div>
-            <hr>
-            <div class="uk-flex uk-flex-between uk-flex-middle" style="font-size: 0.7em; padding-bottom: 4px">
-                <div>Fit</div>
-                <div class="uk-inline">
-                    <a href><span uk-drop-parent-icon></span></a>
-                    <div class="uk-card uk-card-body uk-card-default" uk-drop="mode: click">Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-                    </div>
-                </div>
-            </div>
-            <div uk-margin>
-                <span class="uk-badge" style="font-size: 0.7em; padding: 12px;">
-                    <span>StandardFit</span>
-                    <a href class="uk-margin-small-left" uk-icon="icon: close; ratio: 0.6;"></a>
-                </span>
-            </div>
-            <hr>
-            <div class="uk-flex uk-flex-between uk-flex-middle" style="font-size: 0.7em; padding-bottom: 4px">
-                <div>Category</div>
-                <div class="uk-inline">
-                    <a href><span uk-drop-parent-icon></span></a>
-                    <div class="uk-card uk-card-body uk-card-default" uk-drop="mode: click">Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-                    </div>
-                </div>
-            </div>
-            <div uk-margin>
-                <span class="uk-badge" style="font-size: 0.7em; padding: 12px;">
-                    <span>Cargo Pants And Shorts</span>
-                    <a href class="uk-margin-small-left" uk-icon="icon: close; ratio: 0.6;"></a>
-                </span>
-            </div>
-            <hr>
-            <div class="uk-flex uk-flex-between uk-flex-middle" style="font-size: 0.7em; padding-bottom: 4px">
-                <div>Brand</div>
-                <div class="uk-inline">
-                    <a href><span uk-drop-parent-icon></span></a>
-                    <div class="uk-card uk-card-body uk-card-default" uk-drop="mode: click">Lorem ipsum dolor sit
-                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-                    </div>
-                </div>
-            </div>
-            <div uk-margin>
-                <span class="uk-badge" style="font-size: 0.7em; padding: 12px;">
-                    <span>Altitude</span>
-                    <a href class="uk-margin-small-left" uk-icon="icon: close; ratio: 0.6;"></a>
-                </span>
-            </div>
-            <hr>
-            <div class="uk-flex uk-flex-between uk-flex-middle" style="font-size: 0.7em; padding-bottom: 4px">
-                <div>Keywords</div>
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-bottom">
+                <div style="font-size: 0.7em;">Gender</div>
                 <div class="uk-inline">
                     <a href><span uk-drop-parent-icon></span></a>
                     <div class="uk-card uk-card-body uk-card-default"
-                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">Lorem ipsum dolor
-                        sit
-                        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">
+                        <p class="uk-text-bold">Add a gender</p>
+                        <div class="uk-flex uk-flex-wrap">
+                            {% for item in genders %}
+                            <a href hx-get="/product-filter?a_gender={{ item }}" hx-target="#product-filter"
+                               class="filtered uk-border-pill uk-link-reset uk-text-bold">{{ item }}</a>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
-            <div uk-margin>
-                <span class="uk-badge" style="font-size: 0.7em; padding: 12px;">
-                    <span>backpack</span>
-                    <a href class="uk-margin-small-left" uk-icon="icon: close; ratio: 0.6;"></a>
-                </span>
-                <span class="uk-badge" style="font-size: 0.7em; padding: 12px;">
-                    <span>bag</span>
-                    <a href class="uk-margin-small-left" uk-icon="icon: close; ratio: 0.6;"></a>
-                </span>
-                <span class="uk-badge" style="font-size: 0.7em; padding: 12px;">
-                    <span>jute</span>
-                    <a href class="uk-margin-small-left" uk-icon="icon: close; ratio: 0.6;"></a>
-                </span>
+            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load" hx-target="#products-grid">
+                {% for item in selected_genders %}
+                <a href hx-get="/product-filter?r_gender={{ item }}" hx-target="#product-filter"
+                   class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
+                   onmouseover="this.style.backgroundColor='#d62828'"
+                   onmouseleave="this.style.backgroundColor='#EFCB68'">{{ item }}</a>
+                {% endfor %}
             </div>
             <hr>
-            <label style="font-size: 0.7em">
-                <span class="uk-margin-small-right">Available with Logo24</span>
-                <input class="uk-checkbox" type="checkbox" name="logo24">
-            </label>
-            <div class="uk-margin">
-                <div style="font-size: 0.7em; padding-bottom: 4px">Price</div>
-                <div style="font-size: 0.8em">from R 799</div>
-                <input class="uk-range" type="range" value="2" min="0" max="10" step="0.1" aria-label="Range">
-                <div style="font-size: 0.8em">to R 800</div>
-                <input class="uk-range" type="range" value="2" min="0" max="10" step="0.1" aria-label="Range">
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-bottom">
+                <div style="font-size: 0.7em;">Sizes</div>
+                <div class="uk-inline">
+                    <a href><span uk-drop-parent-icon></span></a>
+                    <div class="uk-card uk-card-body uk-card-default uk-width-large"
+                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">
+                        <p class="uk-text-bold">Add a size</p>
+                        <div class="uk-flex uk-flex-wrap">
+                            {% for item in sizes %}
+                            <a href hx-get="/product-filter?a_size={{ item }}" hx-target="#product-filter"
+                               class="filtered uk-border-pill uk-link-reset uk-text-bold">{{ item }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load" hx-target="#products-grid">
+                {% for item in selected_sizes %}
+                <a href hx-get="/product-filter?r_size={{ item }}" hx-target="#product-filter"
+                   class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
+                   onmouseover="this.style.backgroundColor='#d62828'"
+                   onmouseleave="this.style.backgroundColor='#EFCB68'">{{ item }}</a>
+                {% endfor %}
+            </div>
+            <hr>
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-bottom">
+                <div style="font-size: 0.7em;">Material</div>
+                <div class="uk-inline">
+                    <a href><span uk-drop-parent-icon></span></a>
+                    <div class="uk-card uk-card-body uk-card-default uk-width-large"
+                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">
+                        <p class="uk-text-bold">Add a material</p>
+                        <div class="uk-flex uk-flex-wrap">
+                            {% for item in materials %}
+                            <a href hx-get="/product-filter?a_material={{ item }}" hx-target="#product-filter"
+                               class="filtered uk-border-pill uk-link-reset uk-text-bold">{{ item }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load" hx-target="#products-grid">
+                {% for item in selected_materials %}
+                <a href hx-get="/product-filter?r_material={{ item }}" hx-target="#product-filter"
+                   class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
+                   onmouseover="this.style.backgroundColor='#d62828'"
+                   onmouseleave="this.style.backgroundColor='#EFCB68'">{{ item }}</a>
+                {% endfor %}
+            </div>
+            <hr>
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-bottom">
+                <div style="font-size: 0.7em;">Fit</div>
+                <div class="uk-inline">
+                    <a href><span uk-drop-parent-icon></span></a>
+                    <div class="uk-card uk-card-body uk-card-default"
+                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">
+                        <p class="uk-text-bold">Add a fit</p>
+                        <div class="uk-flex uk-flex-wrap">
+                            {% for item in fits %}
+                            <a href hx-get="/product-filter?a_fit={{ item }}" hx-target="#product-filter"
+                               class="filtered uk-border-pill uk-link-reset uk-text-bold">{{ item }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load" hx-target="#products-grid">
+                {% for item in selected_fits %}
+                <a href hx-get="/product-filter?r_fit={{ item }}" hx-target="#product-filter"
+                   class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
+                   onmouseover="this.style.backgroundColor='#d62828'"
+                   onmouseleave="this.style.backgroundColor='#EFCB68'">{{ item }}</a>
+                {% endfor %}
+            </div>
+            <hr>
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-bottom">
+                <div style="font-size: 0.7em;">Brand</div>
+                <div class="uk-inline">
+                    <a href><span uk-drop-parent-icon></span></a>
+                    <div class="uk-card uk-card-body uk-card-default"
+                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">
+                        <p class="uk-text-bold">Add a brand</p>
+                        <div class="uk-flex uk-flex-wrap">
+                            {% for item in brands %}
+                            <a href hx-get="/product-filter?a_brand={{ item }}" hx-target="#product-filter"
+                               class="filtered uk-border-pill uk-link-reset uk-text-bold">{{ item }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load" hx-target="#products-grid">
+                {% for item in selected_brands %}
+                <a href hx-get="/product-filter?r_brand={{ item }}" hx-target="#product-filter"
+                   class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
+                   onmouseover="this.style.backgroundColor='#d62828'"
+                   onmouseleave="this.style.backgroundColor='#EFCB68'">{{ item }}</a>
+                {% endfor %}
+            </div>
+            <hr>
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-bottom">
+                <div style="font-size: 0.7em;">Keywords</div>
+                <div class="uk-inline">
+                    <a href><span uk-drop-parent-icon></span></a>
+                    <div class="uk-card uk-card-body uk-card-default uk-width-xlarge uk-overflow-auto uk-height-medium"
+                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">
+                        <p class="uk-text-bold">Add a keyword</p>
+                        <div class="uk-flex uk-flex-wrap">
+                            {% for item in keywords %}
+                            <a href hx-get="/product-filter?a_keyword={{ item }}" hx-target="#product-filter"
+                               class="filtered uk-border-pill uk-link-reset uk-text-bold">{{ item }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load" hx-target="#products-grid">
+                {% for item in selected_keywords %}
+                <a href hx-get="/product-filter?r_keyword={{ item }}" hx-target="#product-filter"
+                   class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
+                   onmouseover="this.style.backgroundColor='#d62828'"
+                   onmouseleave="this.style.backgroundColor='#EFCB68'">{{ item }}</a>
+                {% endfor %}
             </div>
         </fieldset>
     </form>

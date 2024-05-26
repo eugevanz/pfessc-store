@@ -1,69 +1,69 @@
-import os
 import random
-
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from supabase import create_client, Client
+from bs4 import BeautifulSoup
+from data import categories, products, banners, default_img, sizes, collections, brands, genders, materials, fits, \
+    keywords
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
 templates = Jinja2Templates(directory="templates")
+templates.env.globals["categories_4"] = random.sample(categories.data, 4)
+templates.env.filters["prettify_html"] = lambda html_content: BeautifulSoup(html_content,
+                                                                            features="html.parser").get_text()
+
 app.product_page = 0
+app.selected_sizes, app.selected_genders, app.selected_materials, app.selected_fits = [], [], [], []
+app.selected_brands, app.selected_keywords = [], []
 
-url: str = os.environ.get("SUPABASE_URL")
-key: str = os.environ.get("SUPABASE_KEY")
-supabase: Client = create_client(url, key)
 
-products = supabase.table("Products").select(
-    "fullCode", "productName", "brand", "images", "variants", "keywords", "description", "categories"
-).execute()
-brands = supabase.table("Brands").select("code", "name", "image").execute()
-product_fullCodes = [product["fullCode"] for product in products.data]
-prices = supabase.table("Prices").select("fullCode", "price").in_("fullCode", product_fullCodes).execute()
-price_lookup = {price["fullCode"]: price["price"] for price in prices.data}
-for product in products.data:
-    full_code = product["fullCode"]
-    if full_code in price_lookup:
-        product["price"] = price_lookup[full_code]
-banners = [
-    "https://inyllwqsghzahwjosayv.supabase.co/storage/v1/object/public/Banners/PFESSC%20Banners.001.png",
-    "https://inyllwqsghzahwjosayv.supabase.co/storage/v1/object/public/Banners/PFESSC%20Banners.002.png",
-    "https://inyllwqsghzahwjosayv.supabase.co/storage/v1/object/public/Banners/PFESSC%20Banners.003.png",
-    "https://inyllwqsghzahwjosayv.supabase.co/storage/v1/object/public/Banners/PFESSC%20Banners.004.png",
-    "https://inyllwqsghzahwjosayv.supabase.co/storage/v1/object/public/Banners/PFESSC%20Banners.005.png"
-]
-categories = supabase.table("Categories").select("categoryCode", "categoryName", "children").execute()
+def filter_store(selection_rem: str, selection_add: str, stored_filter: str):
+    if selection_add is not None:
+        if stored_filter == "size":
+            app.selected_sizes.append(selection_add)
+            app.selected_sizes = list(set(app.selected_sizes))
+        elif stored_filter == "gender":
+            app.selected_genders.append(selection_add)
+            app.selected_genders = list(set(app.selected_genders))
+        elif stored_filter == "material":
+            app.selected_materials.append(selection_add)
+            app.selected_materials = list(set(app.selected_materials))
+        elif stored_filter == "fit":
+            app.selected_fits.append(selection_add)
+            app.selected_fits = list(set(app.selected_fits))
+        elif stored_filter == "brand":
+            app.selected_brands.append(selection_add)
+            app.selected_brands = list(set(app.selected_brands))
+        elif stored_filter == "keyword":
+            app.selected_keywords.append(selection_add)
+            app.selected_keywords = list(set(app.selected_keywords))
+    if selection_rem is not None:
+        try:
+            if stored_filter == "size":
+                app.selected_sizes.remove(selection_rem)
+            elif stored_filter == "gender":
+                app.selected_genders.remove(selection_rem)
+            elif stored_filter == "material":
+                app.selected_materials.remove(selection_rem)
+            elif stored_filter == "fit":
+                app.selected_fits.remove(selection_rem)
+            elif stored_filter == "brand":
+                app.selected_brands.remove(selection_rem)
+            elif stored_filter == "keyword":
+                app.selected_keywords.remove(selection_rem)
+        except ValueError:
+            print(f"The element '{selection_rem}' is not in the list")
 
-sizes = {}
-for product in products.data:
-    for variant in product["variants"]:
-        code_size = variant["codeSize"]
-        if code_size is not None:
-            sizes[code_size] = sizes.get(code_size, 0) + 1
 
-collections = set()
-for product in products.data:
-    for category in product["categories"]:
-        collections.add((category["code"], category["name"], category["path"], category["image"]))
-collections = [{"code": code, "name": name, "path": path, "image": image} for code, name, path, image in collections]
-
-default_img = "https://inyllwqsghzahwjosayv.supabase.co/storage/v1/object/public/Misc/branding-5_eba963a2-dc8f-47fe-b495-91101e675608.png?t=2024-05-07T06%3A14%3A55.152Z"
+def prettify_html(html_content):
+    soup = BeautifulSoup(html_content, 'html.parser')
+    return soup.prettify()
 
 
 @app.get("/", response_class=HTMLResponse)
-async def base(request: Request):
-    context = {
-        "request": request,
-        "categories": categories.data,
-        "categories_4": random.sample(categories.data, 4),
-        "products": products.data
-    }
-    return templates.TemplateResponse("base.html", context=context)
-
-
-@app.get("/index", response_class=HTMLResponse)
 async def index(request: Request):
     context = {
         "request": request,
@@ -80,14 +80,6 @@ async def all_products(request: Request):
     return templates.TemplateResponse("products.html", context=context)
 
 
-@app.get("/collections", response_class=HTMLResponse)
-async def all_collections(request: Request):
-    context = {
-        "request": request
-    }
-    return templates.TemplateResponse("collections.html", context=context)
-
-
 @app.get("/products-slider", response_class=HTMLResponse)
 async def products_slider(request: Request):
     context = {
@@ -99,30 +91,64 @@ async def products_slider(request: Request):
 
 @app.get("/products-grid", response_class=HTMLResponse)
 async def products_grid(request: Request, page: int = None, is_feat: bool = False):
-    # Ensure page is always greater than or equal to 1
     if page is not None: app.product_page = max(page, 1)  # If page is provided, set product_page
-    # to the maximum of page or 1
     if app.product_page < 1:  app.product_page = 1  # Ensure product_page is always at least 1
-
-    # Calculate the start index for pagination
-    start = (app.product_page - 1) * 15
-
-    # Get products data
-    products_ = products.data
-
-    # Prepare context data for template rendering
-    context = {
+    start = (app.product_page - 1) * 15  # Calculate the start index for pagination
+    products_ = products.data  # Get products data
+    context = {  # Prepare context data for template rendering
         "request": request,  # Request object
         "page": app.product_page,  # Current page number
         "default_img": default_img,  # Default image URL
         "is_feat": is_feat,  # Flag indicating if only featured products are requested
-        # Select products based on is_feat flag: either a random sample of 15
-        # products or a subset starting from start index
         "products": random.sample(products.data, 15) if is_feat else products_[start: (start + 15)]
     }
-
-    # Render the HTML template with the context data
     return templates.TemplateResponse("products-grid.html", context=context)
+
+
+@app.get("/product-filter", response_class=HTMLResponse)
+async def product_filter(request: Request, a_size: str = None, r_size: str = None, a_gender: str = None,
+                         r_gender: str = None, a_material: str = None, r_material: str = None, a_fit: str = None,
+                         r_fit: str = None, a_brand: str = None, r_brand: str = None, a_keyword: str = None,
+                         r_keyword: str = None):
+    filter_store(r_size, a_size, "size")
+    filter_store(r_gender, a_gender, "gender")
+    filter_store(r_material, a_material, "material")
+    filter_store(r_fit, a_fit, "fit")
+    filter_store(r_brand, a_brand, "brand")
+    filter_store(r_keyword, a_keyword, "keyword")
+    context = {
+        "request": request,
+        "sizes": sizes,
+        "selected_sizes": app.selected_sizes,
+        "genders": genders,
+        "selected_genders": app.selected_genders,
+        "materials": materials,
+        "selected_materials": app.selected_materials,
+        "fits": fits,
+        "selected_fits": app.selected_fits,
+        "brands": [item["name"] for item in brands.data],
+        "selected_brands": app.selected_brands,
+        "keywords": keywords,
+        "selected_keywords": app.selected_keywords
+    }
+    return templates.TemplateResponse("product-filter.html", context=context)
+
+
+@app.get("/product-detail", response_class=HTMLResponse)
+async def product_detail(request: Request, code: str):
+    context = {
+        "request": request,
+        "product": next((product for product in products.data if product.get("fullCode") == code), None)
+    }
+    return templates.TemplateResponse("product-detail.html", context=context)
+
+
+@app.get("/collections", response_class=HTMLResponse)
+async def all_collections(request: Request):
+    context = {
+        "request": request
+    }
+    return templates.TemplateResponse("collections.html", context=context)
 
 
 @app.get("/collections-grid", response_class=HTMLResponse)
@@ -144,14 +170,6 @@ async def suppliers_grid(request: Request):
     return templates.TemplateResponse("suppliers-grid.html", context=context)
 
 
-@app.get("/product-filter", response_class=HTMLResponse)
-async def product_filter(request: Request):
-    context = {
-        "request": request
-    }
-    return templates.TemplateResponse("product-filter.html", context=context)
-
-
 @app.get("/selected-pay-meth")
 def selected_pay_meth(request: Request):
     return request.get("payment-method")
@@ -160,11 +178,6 @@ def selected_pay_meth(request: Request):
 @app.get("/selected-billing-address")
 def selected_billing_address(request: Request):
     return request.get("billing-addr")
-
-# @app.route("/Collections")
-# def all_collections():
-#     return render_template("collections.html")
-
 
 # @app.route("/add-to-cart/<item_id>")
 # def add_to_cart(item_id):

@@ -1,7 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
 <div class="uk-section">
     <div class="uk-container">
         <p class="uk-text-lead uk-text-center uk-margin-large uk-text-uppercase" style="letter-spacing: 3px;">Shop all
             products</p>
-        <div id="products-grid" hx-get="/products-grid" hx-trigger="load"></div>
+        <div class="uk-grid-large" uk-grid>
+            <div id="product-filter" class="uk-width-1-6@l uk-width-1-5@m uk-width-1-4@s uk-visible@s"
+                 hx-get="/product-filter" hx-trigger="load"></div>
+            <div id="products-grid" class="uk-width-expand" hx-get="/products-grid" hx-trigger="load"></div>
+        </div>
     </div>
 </div>
+{% endblock %}

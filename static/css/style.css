@@ -23,5 +23,5 @@
     100% { opacity: 1; }
 }
 .base-body {
-    animation: fadeIn 2s ease-out 0s 1 forwards;
+    animation: fadeIn 0.5s ease-out 0s 1 forwards;
 }

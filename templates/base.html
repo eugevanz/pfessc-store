@@ -10,8 +10,19 @@
     <script src="{{ url_for('static', path='js/htmx.min.js') }}"></script>
     <script src="{{ url_for('static', path='js/uikit.min.js') }}"></script>
     <script src="{{ url_for('static', path='js/uikit-icons.min.js') }}"></script>
+    <style>
+        .filtered {
+            background-color: #EFCB68;
+            font-size: 0.7em;
+            padding: 4px;
+            padding-left: 12px;
+            padding-right: 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+    </style>
 </head>
-<body class="base-body">
+<body>
 <nav class="uk-navbar-container" style="letter-spacing: 3px;">
     <div class="uk-container">
         <div uk-navbar="align: center">
@@ -46,7 +57,7 @@
                 </div>
                 <ul class="uk-navbar-nav uk-visible@m">
                     <li>
-                        <a href hx-get="/index" hx-target="#content" class="uk-text-nowrap">Home</a>
+                        <a href="/" class="uk-text-nowrap">Home</a>
                     </li>
                     {% for item in categories_4 %}
                     <li>
@@ -74,9 +85,8 @@
     <span class="uk-text-middle">ON ORDERS OVER R 1050</span>
 </div>
 
-<main id="content">
-    <div hx-get="/index" hx-trigger="load"></div>
-</main>
+{% block content %}
+{% endblock %}
 
 <div class="uk-section uk-section-large uk-section-muted">
     <div class="uk-container">

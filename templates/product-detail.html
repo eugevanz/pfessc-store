@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="uk-section">
+    <div class="uk-container">
+        <button class="uk-float-right uk-close-large" type="button" onclick="history.back()" uk-close></button>
+        <div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle" uk-grid>
+            <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1"
+                 uk-slideshow="ratio: false">
+                <div class="uk-slideshow-items" uk-height-viewport>
+                    {% for image in product['images'] %}
+                    <div>
+                        <img src="{{ image.urls[0].url|default(default_img) }}" alt="{{ image.name }}" uk-cover>
+                    </div>
+                    {% endfor %}
+                </div>
+                <a class="uk-position-center-left uk-position-small uk-hidden-hover" href
+                   uk-slidenav-previous uk-slideshow-item="previous"></a>
+                <a class="uk-position-center-right uk-position-small uk-hidden-hover" href
+                   uk-slidenav-next uk-slideshow-item="next"></a>
+            </div>
+            <div class="uk-padding-large">
+                <h1>{{ product.productName|default('No product name') }}</h1>
+                <div>{{ product.description|prettify_html }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

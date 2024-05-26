@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <div class="uk-section">
     <div class="uk-container">
         <p class="uk-text-lead uk-text-center uk-margin-large uk-text-uppercase"
@@ -6,3 +8,4 @@
         <div id="collections-grid" hx-get="/collections-grid" hx-trigger="load"></div>
     </div>
 </div>
+{% endblock %}
