@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="uk-section" _="on load call me.scrollIntoView({behavior: 'smooth'})">
+<div class="uk-section" _="on load go to the top of me smoothly">
     <div class="uk-container">
         <button class="uk-float-right uk-close-large" type="button" onclick="history.back()" uk-close></button>
         <div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle" uk-grid>
@@ -27,9 +27,42 @@
                 </ul>
             </div>
             <div class="uk-padding uk-margin-auto-vertical">
-                <p class="uk-text-bold" style="font-size: 1em">{{ product.productName|default('No product name')
-                    }}</p>
-                <p class="uk-text-muted uk-width-medium" style="font-size: 0.8em">{{ product.description|prettify_html }}</p>
+                <p class="uk-text-bold uk-width-medium" style="font-size: 1em">
+                    {{ product.productName|default('No product name') }}
+                </p>
+                <div class="uk-text-small uk-text-muted uk-text-uppercase uk-margin-small"
+                     style="font-size: 0.8em; height: 14px;">{{ product.brand.name|default('PfessC Branding') }}
+                </div>
+                <div class="uk-text-bold uk-text-nowrap" style="font-size: 0.8em;">
+                    R {{ product.price|default('Sold Out') }}
+                </div>
+                <div class="uk-flex uk-flex-wrap uk-margin">
+                    <div class="uk-text-small uk-text-muted uk-text-bold uk-margin-small-right">Available Colours</div>
+                    {% for item in product['variants'] %}
+                    <label class="options uk-border-pill uk-text-bold uk-flex uk-flex-bottom uk-light"
+                           style="background-color: {{ item.codeColourName|colour_filter }};">
+                        <input class="uk-radio" type="radio" name="codeColour" {% if loop.first %} checked {% endif %}
+                               style="border-color: transparent;">&nbsp;
+                        <span _="on load if my innerHTML is 'SOLID WHITE' remove .uk-light from the closest <label/>">{{
+                            item.codeColourName }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+                <div class="uk-flex uk-flex-wrap uk-margin">
+                    <div class="uk-text-small uk-text-muted uk-text-bold uk-margin-small-right">Available
+                        Sizes
+                    </div>
+                    {% for item in product['variants'] %}
+                    <label class="options uk-border-pill uk-text-bold uk-text-muted uk-flex uk-flex-bottom uk-background-secondary">
+                        <input class="uk-radio" type="radio" name="codeSize" {% if loop.first %} checked {% endif %}
+                               style="border-color: transparent;">&nbsp;
+                        <span>{{ item.codeSizeName }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+                <p class="uk-text-muted uk-width-medium" style="font-size: 0.8em">
+                    {{ product.description|prettify_html }}
+                </p>
             </div>
         </div>
     </div>

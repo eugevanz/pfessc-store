@@ -47,7 +47,7 @@
         <ul class="uk-pagination uk-flex-right uk-margin-medium-top">
             {% if page > 1 %}
             <li>
-                <a href hx-get="/products-grid?page={{ page - 1 }}" hx-target="#products-grid">
+                <a href="#products" hx-get="/products-grid?page={{ page - 1 }}" hx-target="#products-grid" uk-scroll>
                     <span class="uk-margin-small-right" uk-pagination-previous></span>
                     <span>Previous</span>
                 </a>
@@ -60,7 +60,7 @@
                        hx-target="#products-grid">
             </li>
             <li>
-                <a href hx-get="/products-grid?page={{ page + 1 }}" hx-target="#products-grid">
+                <a href="#products" hx-get="/products-grid?page={{ page + 1 }}" hx-target="#products-grid" uk-scroll>
                     <span>Next</span>
                     <span class="uk-margin-small-left" uk-pagination-next></span>
                 </a>

@@ -58,9 +58,21 @@ def filter_store(selection_rem: str, selection_add: str, stored_filter: str):
             print(f"The element '{selection_rem}' is not in the list")
 
 
-def prettify_html(html_content):
-    soup = BeautifulSoup(html_content, 'html.parser')
-    return soup.prettify()
+def colour_filter(colour: str):
+    if colour is None: return "#FFFAFA"
+    colours = {"PINK": "#FF69B4", "RED": "#DC143C", "YELLOW": "#FFD700", "PURPLE": "#BA55D3",
+               "STONE MILITARY GREEN": "#556B2F", "SKY BLUE": "#87CEEB", "DARK GREY": "#A9A9A9", "STONE": "#e3cba5",
+               "ROYAL BLUE": "#4169E1", "BLUE": "#0000FF", "WHITE": "#FFFFFF", "GREY": "#808080", "NAVY": "#000080",
+               "MILITARY GREEN": "#667C3E", "CHARCOAL": "#36454F", "BLACK": "#141414", "SOLID WHITE": "#FBFCFC",
+               "NATURAL": "#FBFCFC", "GOLD": "#FFD700", "SILVER": "#C0C0C0", "GUN METAL": "#818589", "KHAKI": "#F0E68C",
+               "TRANSPARENT": "#FBFCFC", "CYAN": "#7FFFD4", "LIME": "#32CD32", "GREEN": "#228B22", "ORANGE": "#FF7518",
+               "TURQUOISE": "#40E0D0", "DARK GREEN": "#097969", "ROSE GOLD": "#E0BFB8", "BRONZE": "#CD7F32",
+               "MAROON": "#800000", "AQUA": "#89CFF0", "OCEAN BLUE": "#0059b3", "CREAM": "#FFFDD0",
+               "LIGHT BLUE": "#89CFF0"}
+    return colours[colour]
+
+
+templates.env.filters["colour_filter"] = colour_filter
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -185,7 +197,6 @@ def selected_billing_address(request: Request):
 #                  "color": "grey"})
 #     return render_template("cart-confirmation.html", product=item)
 
-
 # @app.route(rule="/buy-now", methods=["POST"])
 # def buy_now():
 #     item_name = request.form["name"]
@@ -199,19 +210,16 @@ def selected_billing_address(request: Request):
 #                  "size": selected_size, "color": selected_color})
 #     return render_template("checkout.html", products=item)
 
-
 # @app.route("/product-detail/<item_id>")
 # def product_detail(item_id):
 #     product = products.data[0]
 #     return render_template("product-detail.html", product=product)
-
 
 # @app.route("/description/<fullCode>")
 # def item_desc(full_code: str):
 #     desc = next((product.get("description") for product in products.data if product.get("fullCode") == full_code), None)
 #     print(desc)
 #     return desc
-
 
 # if __name__ == "__main__":
 #     app.run(debug=True)
