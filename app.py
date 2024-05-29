@@ -62,17 +62,40 @@ def colour_filter(colour: str):
     if colour is None: return "#FFFAFA"
     colours = {"PINK": "#FF69B4", "RED": "#DC143C", "YELLOW": "#FFD700", "PURPLE": "#BA55D3",
                "STONE MILITARY GREEN": "#556B2F", "SKY BLUE": "#87CEEB", "DARK GREY": "#A9A9A9", "STONE": "#e3cba5",
-               "ROYAL BLUE": "#4169E1", "BLUE": "#0000FF", "WHITE": "#FFFFFF", "GREY": "#808080", "NAVY": "#000080",
-               "MILITARY GREEN": "#667C3E", "CHARCOAL": "#36454F", "BLACK": "#141414", "SOLID WHITE": "#FBFCFC",
-               "NATURAL": "#FBFCFC", "GOLD": "#FFD700", "SILVER": "#C0C0C0", "GUN METAL": "#818589", "KHAKI": "#F0E68C",
-               "TRANSPARENT": "#FBFCFC", "CYAN": "#7FFFD4", "LIME": "#32CD32", "GREEN": "#228B22", "ORANGE": "#FF7518",
+               "ROYAL BLUE": "#4169E1", "BLUE": "#0000FF", "WHITE": "#FAF9F6", "GREY": "#808080", "NAVY": "#000080",
+               "MILITARY GREEN": "#667C3E", "CHARCOAL": "#36454F", "BLACK": "#141414", "SOLID WHITE": "#FAF9F6",
+               "NATURAL": "#FAF9F6", "GOLD": "#FFD700", "SILVER": "#C0C0C0", "GUN METAL": "#818589", "KHAKI": "#F0E68C",
+               "TRANSPARENT": "#FAF9F6", "CYAN": "#7FFFD4", "LIME": "#32CD32", "GREEN": "#228B22", "ORANGE": "#FF7518",
                "TURQUOISE": "#40E0D0", "DARK GREEN": "#097969", "ROSE GOLD": "#E0BFB8", "BRONZE": "#CD7F32",
                "MAROON": "#800000", "AQUA": "#89CFF0", "OCEAN BLUE": "#0059b3", "CREAM": "#FFFDD0",
-               "LIGHT BLUE": "#89CFF0"}
+               "LIGHT BLUE": "#89CFF0", "WHITE BLACK": "#FAF9F6", "WHITE LIGHT BLUE": "#F0FFFF"}
     return colours[colour]
 
 
 templates.env.filters["colour_filter"] = colour_filter
+
+
+def avail_colours(variants: list):
+    code_colour_names = []
+    for item in variants:
+        code_colour_names.append(item["codeColourName"])
+        code_colour_names = list(set(code_colour_names))
+    return code_colour_names
+
+
+templates.env.filters["avail_colours"] = avail_colours
+
+
+def avail_sizes(variants: list):
+    code_size_names = []
+    for item in variants:
+        if item["codeSizeName"]:
+            code_size_names.append(item["codeSizeName"])
+        code_size_names = list(set(code_size_names))
+    return code_size_names
+
+
+templates.env.filters["avail_sizes"] = avail_sizes
 
 
 @app.get("/", response_class=HTMLResponse)

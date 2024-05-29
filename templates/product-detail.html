@@ -33,33 +33,38 @@
                 <div class="uk-text-small uk-text-muted uk-text-uppercase uk-margin-small"
                      style="font-size: 0.8em; height: 14px;">{{ product.brand.name|default('PfessC Branding') }}
                 </div>
-                <div class="uk-text-bold uk-text-nowrap" style="font-size: 0.8em;">
+                <div class="uk-text-bold uk-text-nowrap uk-margin-bottom" style="font-size: 0.8em;">
                     R {{ product.price|default('Sold Out') }}
                 </div>
-                <div class="uk-flex uk-flex-wrap uk-margin">
-                    <div class="uk-text-small uk-text-muted uk-text-bold uk-margin-small-right">Available Colours</div>
-                    {% for item in product['variants'] %}
+                <div class="uk-text-muted uk-text-bold" style="font-size: 0.8em; margin: 3px;">Available Colours</div>
+                <div class="uk-flex uk-flex-wrap uk-flex-middle uk-margin-bottom">
+                    {% for item in product['variants']|avail_colours %}
                     <label class="options uk-border-pill uk-text-bold uk-flex uk-flex-bottom uk-light"
-                           style="background-color: {{ item.codeColourName|colour_filter }};">
+                           style="background-color: {{ item|colour_filter }};">
                         <input class="uk-radio" type="radio" name="codeColour" {% if loop.first %} checked {% endif %}
                                style="border-color: transparent;">&nbsp;
-                        <span _="on load if my innerHTML is 'SOLID WHITE' remove .uk-light from the closest <label/>">{{
-                            item.codeColourName }}</span>
+                        <span _="on load
+                                if my innerHTML is in ['None', 'SOLID WHITE', 'NATURAL', 'TRANSPARENT', 'KHAKI',
+                                'WHITE BLACK', 'WHITE LIGHT BLUE', 'WHITE', 'CYAN']
+                                remove .uk-light from the closest <label/>
+                                then set *border-color of the closest <label/> to '#818589'
+                                then set *border-width of the closest <label/> to 1px
+                                then set *border-style of the closest <label/> to 'solid'">{{item }}</span>
                     </label>
                     {% endfor %}
                 </div>
-                <div class="uk-flex uk-flex-wrap uk-margin">
-                    <div class="uk-text-small uk-text-muted uk-text-bold uk-margin-small-right">Available
-                        Sizes
-                    </div>
-                    {% for item in product['variants'] %}
+                {% if product['variants']|avail_sizes|length > 0 %}
+                <div class="uk-text-muted uk-text-bold" style="font-size: 0.8em; margin: 3px;">Available Sizes</div>
+                <div class="uk-flex uk-flex-wrap uk-flex-middle">
+                    {% for item in product['variants']|avail_sizes %}
                     <label class="options uk-border-pill uk-text-bold uk-text-muted uk-flex uk-flex-bottom uk-background-secondary">
                         <input class="uk-radio" type="radio" name="codeSize" {% if loop.first %} checked {% endif %}
                                style="border-color: transparent;">&nbsp;
-                        <span>{{ item.codeSizeName }}</span>
+                        <span>{{ item }}</span>
                     </label>
                     {% endfor %}
                 </div>
+                {% endif %}
                 <p class="uk-text-muted uk-width-medium" style="font-size: 0.8em">
                     {{ product.description|prettify_html }}
                 </p>
