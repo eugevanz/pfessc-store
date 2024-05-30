@@ -28,12 +28,17 @@
                          style="height: 56px; line-height: 1.2; font-size: 1em; overflow: hidden;">
                         {{ item.productName|default('No product name') }}
                     </div>
-                    <div class="uk-text-small uk-text-muted uk-text-uppercase uk-margin-small"
-                         style="font-size: 0.8em; height: 14px;">{{ item.brand.name|default('PfessC Branding') }}
+                    <div class="uk-flex uk-flex-wrap uk-flex-middle uk-margin-small"
+                         style="height: 18px; overflow: hidden;">
+                        {% for colour in item.variants|avail_colours %}
+                        <span class="uk-border-circle clr-brief" style="background-color: {{ colour|colour_filter }};">
+                        </span>
+                        {% endfor %}
                     </div>
-                    <div class="uk-margin-top uk-flex uk-flex-middle uk-flex-between">
-                        <div class="uk-text-bold uk-text-nowrap" style="font-size: 0.8em;">R {{
-                            item.price|default('Sold Out') }}
+                    <div class="uk-margin-small-top uk-flex uk-flex-middle uk-flex-between">
+                        <div class="uk-text-bold uk-text-nowrap"
+                             style="font-size: 0.8em;">
+                            {% if item.price %}R {{ item.price }}{% else %}Sold Out{% endif %}
                         </div>
                         <a href="/add-to-cart/{{ item['simpleCode'] }}" class="uk-icon-button" uk-icon="cart"></a>
                     </div>
@@ -59,12 +64,14 @@
                        name="page" aria-label="Page" hx-get="/products-grid" hx-trigger="keyup changed delay:1s"
                        hx-target="#products-grid">
             </li>
+            {% if products %}
             <li>
                 <a href="#products" hx-get="/products-grid?page={{ page + 1 }}" hx-target="#products-grid" uk-scroll>
                     <span>Next</span>
                     <span class="uk-margin-small-left" uk-pagination-next></span>
                 </a>
             </li>
+            {% endif %}
         </ul>
     </nav>
     {% endif %}

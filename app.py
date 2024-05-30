@@ -68,7 +68,8 @@ def colour_filter(colour: str):
                "TRANSPARENT": "#FAF9F6", "CYAN": "#7FFFD4", "LIME": "#32CD32", "GREEN": "#228B22", "ORANGE": "#FF7518",
                "TURQUOISE": "#40E0D0", "DARK GREEN": "#097969", "ROSE GOLD": "#E0BFB8", "BRONZE": "#CD7F32",
                "MAROON": "#800000", "AQUA": "#89CFF0", "OCEAN BLUE": "#0059b3", "CREAM": "#FFFDD0",
-               "LIGHT BLUE": "#89CFF0", "WHITE BLACK": "#FAF9F6", "WHITE LIGHT BLUE": "#F0FFFF"}
+               "LIGHT BLUE": "#89CFF0", "WHITE BLACK": "#FAF9F6", "WHITE LIGHT BLUE": "#F0FFFF", "OLIVE": "#808000",
+               "DARK BLUE": "#00008B", "BROWN OLD": "#6E260E", "WHITE NAVY": "#B6D0E2", "BROWN": "#8B4513"}
     return colours[colour]
 
 
