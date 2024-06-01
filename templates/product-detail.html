@@ -3,7 +3,7 @@
 <div class="uk-section" _="on load go to the top of me smoothly">
     <div class="uk-container">
         <button class="uk-float-right uk-close-large" type="button" onclick="history.back()" uk-close></button>
-        <div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle" uk-grid>
+        <div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle uk-margin-bottom" uk-grid>
             <div uk-slideshow="animation: push; ratio: 1:1">
                 <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
                     <div class="uk-slideshow-items">
@@ -26,7 +26,7 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="uk-padding uk-margin-auto-vertical">
+            <form class="uk-padding uk-margin-auto-vertical">
                 <p class="uk-text-bold uk-width-medium" style="font-size: 1em">
                     {{ product.productName|default('No product name') }}
                 </p>
@@ -34,7 +34,7 @@
                      style="font-size: 0.8em; height: 14px;">{{ product.brand.name|default('PfessC Branding') }}
                 </div>
                 <div class="uk-text-bold uk-text-nowrap uk-margin-bottom" style="font-size: 0.8em;">
-                   {% if product.price %}R {{ product.price }}{% else %}Sold Out{% endif %}
+                    {% if product.price %}R {{ product.price }}{% else %}Sold Out{% endif %}
                 </div>
                 <div class="uk-text-muted uk-text-bold" style="font-size: 0.8em; margin: 3px;">Available Colours</div>
                 <div class="uk-flex uk-flex-wrap uk-flex-middle uk-margin-bottom">
@@ -45,9 +45,10 @@
                                style="border-color: transparent;">&nbsp;
                         <span _="on load
                                 if my innerHTML is in ['None', 'SOLID WHITE', 'NATURAL', 'TRANSPARENT', 'KHAKI',
-                                'WHITE BLACK', 'WHITE LIGHT BLUE', 'WHITE', 'CYAN']
+                                'WHITE BLACK', 'WHITE LIGHT BLUE', 'WHITE', 'CYAN', 'CREAM']
                                 remove .uk-light from the closest <label/>
-                                if my innerHTML is in ['None', 'SOLID WHITE', 'NATURAL', 'TRANSPARENT', 'WHITE BLACK', 'WHITE']
+                                if my innerHTML is in ['None', 'SOLID WHITE', 'NATURAL', 'TRANSPARENT', 'WHITE BLACK',
+                                'WHITE', 'CREAM']
                                 then set *border-color of the closest <label/> to '#818589'
                                 then set *border-width of the closest <label/> to 1px
                                 then set *border-style of the closest <label/> to 'solid'">{{ item }}</span>
@@ -66,8 +67,21 @@
                     {% endfor %}
                 </div>
                 {% endif %}
+                <div class="uk-margin">
+                    <div class="uk-text-muted uk-text-bold" style="font-size: 0.8em; margin: 3px;">Quantity</div>
+                    <button type="button" class="uk-icon-button" uk-icon="minus"
+                            _="on click get the (value of the next <input/>) as an Int
+                            decrement it unless it is 1 then put it into the value of the next <input/>"></button>
+                    <input class="uk-input uk-form-width-small uk-text-center uk-border-pill" aria-label="Quantity"
+                           name="selected-quantity" type="number" min="1" value="1" _="on keyup wait 1s
+                           if my value is less than 1
+                           then set my value to 1">
+                    <button type="button" class="uk-icon-button" uk-icon="plus"
+                            _="on click get the (value of the previous <input/>) as an Int
+                            increment it then put it into the value of the previous <input/>"></button>
+                </div>
                 <button class="uk-button uk-button-default uk-width-medium uk-margin-small-bottom uk-border-pill
-                        uk-text-bold uk-text-left" style="font-size: 0.7em">
+                        uk-text-bold uk-text-left uk-margin-top" style="font-size: 0.7em">
                     <span class="uk-margin-small-right" uk-icon="icon: cart"></span><span>Add to cart</span>
                 </button>
                 <button class="uk-button uk-button-primary uk-width-medium uk-margin-bottom uk-border-pill uk-text-bold
@@ -77,7 +91,49 @@
                 <p class="uk-text-muted uk-width-medium@s" style="font-size: 0.8em">
                     {{ product.description|prettify_html }}
                 </p>
+            </form>
+        </div>
+        <div class="uk-text-muted uk-text-bold uk-padding" style="font-size: 0.8em; margin: 3px;">
+            Recommendations
+        </div>
+        <div class="uk-slider-container-offset" uk-slider>
+            <div class="uk-position-relative uk-visible-toggle" tabindex="-1">
+                <div class="uk-slider-items uk-child-width-1-4 uk-child-width-1-5@s uk-child-width-1-6@m
+                uk-child-width-1-7@l uk-grid">
+                    {% for item in recommended %}
+                    <div>
+                        <div class="uk-card uk-card-small uk-border-rounded uk-width-medium">
+                            <a href="/product-detail?code={{ item.fullCode }}" class="uk-card-media-top">
+                                <img src="{{ item.images[0].urls[0].url|default(default_img) }}" width="1024"
+                                     height="1024" alt="">
+                            </a>
+                            <div class="uk-card-body">
+                                <a href="/add-to-cart/{{ item['simpleCode'] }}"
+                                   class="uk-icon-button uk-position-top-right" uk-icon="cart"></a>
+                                <div class="uk-card-title"
+                                     style="height: 42px; line-height: 1.2; font-size: 0.7em; overflow: hidden;">
+                                    {{ item.productName|default('No product name') }}
+                                </div>
+                                <div class="uk-flex uk-flex-wrap uk-flex-middle uk-margin-small"
+                                     style="height: 18px; overflow: hidden;">
+                                    {% for colour in item.variants|avail_colours %}
+                                    <span class="uk-border-circle clr-brief"
+                                          style="background-color: {{ colour|colour_filter }};"></span>
+                                    {% endfor %}
+                                </div>
+                                <div class="uk-margin-small-top uk-flex uk-flex-middle uk-flex-between">
+                                    <div class="uk-text-bold uk-text-nowrap"
+                                         style="font-size: 0.6em;">
+                                        {% if item.price %}R {{ item.price }}{% else %}Sold Out{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
+            <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
         </div>
     </div>
 </div>

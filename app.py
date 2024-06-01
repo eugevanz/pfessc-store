@@ -69,7 +69,8 @@ def colour_filter(colour: str):
                "TURQUOISE": "#40E0D0", "DARK GREEN": "#097969", "ROSE GOLD": "#E0BFB8", "BRONZE": "#CD7F32",
                "MAROON": "#800000", "AQUA": "#89CFF0", "OCEAN BLUE": "#0059b3", "CREAM": "#FFFDD0",
                "LIGHT BLUE": "#89CFF0", "WHITE BLACK": "#FAF9F6", "WHITE LIGHT BLUE": "#F0FFFF", "OLIVE": "#808000",
-               "DARK BLUE": "#00008B", "BROWN OLD": "#6E260E", "WHITE NAVY": "#B6D0E2", "BROWN": "#8B4513"}
+               "DARK BLUE": "#00008B", "BROWN OLD": "#6E260E", "WHITE NAVY": "#B6D0E2", "BROWN": "#8B4513",
+               "BLACK RED": "#FBFCFC"}
     return colours[colour]
 
 
@@ -174,7 +175,8 @@ async def product_filter(request: Request, a_size: str = None, r_size: str = Non
 async def product_detail(request: Request, code: str):
     context = {
         "request": request,
-        "product": next((product for product in products.data if product.get("fullCode") == code), None)
+        "product": next((product for product in products.data if product.get("fullCode") == code), None),
+        "recommended": random.sample(products.data, 15)
     }
     return templates.TemplateResponse("product-detail.html", context=context)
 

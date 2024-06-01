@@ -60,9 +60,8 @@
             {% endif %}
             <li>
                 <input class="uk-input uk-form-width-small uk-form-large uk-text-center" type="text"
-                       value="{{ page }}"
-                       name="page" aria-label="Page" hx-get="/products-grid" hx-trigger="keyup changed delay:1s"
-                       hx-target="#products-grid">
+                       value="{{ page }}" name="page" aria-label="Page" hx-get="/products-grid"
+                       hx-trigger="keyup changed delay:1s" hx-target="#products-grid">
             </li>
             {% if products %}
             <li>
