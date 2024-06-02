@@ -43,7 +43,7 @@
                            style="background-color: {{ item|colour_filter }};">
                         <input class="uk-radio" type="radio" name="codeColour" {% if loop.first %} checked {% endif %}
                                style="border-color: transparent;">&nbsp;
-                        <span _="on load
+                        <span style="font-size: 0.7em;" _="on load
                                 if my innerHTML is in ['None', 'SOLID WHITE', 'NATURAL', 'TRANSPARENT', 'KHAKI',
                                 'WHITE BLACK', 'WHITE LIGHT BLUE', 'WHITE', 'CYAN', 'CREAM']
                                 remove .uk-light from the closest <label/>
@@ -96,7 +96,7 @@
         <div class="uk-text-muted uk-text-bold uk-padding" style="font-size: 0.8em; margin: 3px;">
             Recommendations
         </div>
-        <div class="uk-slider-container-offset" uk-slider>
+        <div class="uk-slider-container-offset" uk-slider="autoplay: true; autoplay-interval: 3000">
             <div class="uk-position-relative uk-visible-toggle" tabindex="-1">
                 <div class="uk-slider-items uk-child-width-1-4 uk-child-width-1-5@s uk-child-width-1-6@m
                 uk-child-width-1-7@l uk-grid">
