@@ -37,7 +37,7 @@
             <div class="uk-navbar-center">
                 <ul class="uk-navbar-nav">
                     <li>
-                        <a href hx-get="/index" hx-target="#content" class="uk-flex uk-flex-middle">
+                        <a href="/" class="uk-flex uk-flex-middle">
                             <span class="uk-text-large uk-text-bold">PfessC</span>
                             <div class="uk-margin-small-right"
                                  style="width: 2px; height: 44px; background-color: #EFCB68; margin-left: 4px;"></div>
@@ -70,7 +70,7 @@
                     {% for item in categories_4 %}
                     <li>
                         <a href="#" class="uk-text-nowrap">{{ item['categoryName'] }}</a>
-                        <div class="uk-navbar-dropdown uk-navbar-dropdown-width-2">
+                        <div uk-dropdown="mode: click">
                             <ul class="uk-nav uk-navbar-dropdown-nav">
                                 {% for child in item['children'] %}
                                 <li><a href="#">{{ child['categoryName'] }}</a></li>
@@ -81,6 +81,11 @@
                     {% endfor %}
                     <li>
                         <a href="#" class="uk-text-nowrap">More...</a>
+                        <div uk-dropdown="mode: click">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                <li><a href="#">More items</a></li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>

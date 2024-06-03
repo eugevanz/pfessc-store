@@ -18,6 +18,7 @@ templates.env.filters["prettify_html"] = lambda html_content: BeautifulSoup(html
 app.product_page = 0
 app.selected_sizes, app.selected_genders, app.selected_materials, app.selected_fits = [], [], [], []
 app.selected_brands, app.selected_keywords = [], []
+app.filters = [{'gender': []}, {'size': []}, {'material': []}, {'fit': []}, {'brand': []}, {'keyword': []}]
 
 
 def filter_store(selection_rem: str, selection_add: str, stored_filter: str):
@@ -58,7 +59,29 @@ def filter_store(selection_rem: str, selection_add: str, stored_filter: str):
             print(f"The element '{selection_rem}' is not in the list")
 
 
-def colour_filter(colour: str):
+def modify_filter(filter_key, new_value):
+    filter_dict = next((f for f in app.filters if filter_key in f), None)
+    if filter_dict is not None:
+        if new_value in filter_dict[filter_key]:
+            filter_dict[filter_key].remove(new_value)
+        else:
+            filter_dict[filter_key].append(new_value)
+    else:
+        app.filters.append({filter_key: [new_value]})
+
+
+def apply_filters() -> list:
+    filtered_products = products.data
+    for filter_dict in app.filters:
+        for key, allowed_values in filter_dict.items():
+            if key == "keywords":
+                filtered_products = [product for product in filtered_products if allowed_values in product[key]]
+            else:
+                filtered_products = [product for product in filtered_products if product[key] in allowed_values]
+    return filtered_products
+
+
+def colour_filter(colour: str) -> str:
     if colour is None: return "#FFFAFA"
     colours = {"PINK": "#FF69B4", "RED": "#DC143C", "YELLOW": "#FFD700", "PURPLE": "#BA55D3",
                "STONE MILITARY GREEN": "#556B2F", "SKY BLUE": "#87CEEB", "DARK GREY": "#A9A9A9", "STONE": "#e3cba5",
@@ -77,7 +100,7 @@ def colour_filter(colour: str):
 templates.env.filters["colour_filter"] = colour_filter
 
 
-def avail_colours(variants: list):
+def avail_colours(variants: list) -> list:
     code_colour_names = []
     for item in variants:
         code_colour_names.append(item["codeColourName"])
@@ -88,7 +111,7 @@ def avail_colours(variants: list):
 templates.env.filters["avail_colours"] = avail_colours
 
 
-def avail_sizes(variants: list):
+def avail_sizes(variants: list) -> list:
     code_size_names = []
     for item in variants:
         if item["codeSizeName"]:
@@ -127,17 +150,23 @@ async def products_slider(request: Request):
 
 
 @app.get("/products-grid", response_class=HTMLResponse)
-async def products_grid(request: Request, page: int = None, is_feat: bool = False):
+async def products_grid(request: Request, page: int = None, is_feat: bool = False, gender: str = None, material: str =
+None, fit: str = None, brand: str = None, keyword: str = None):
+    if gender is not None: modify_filter(filter_key="gender", new_value=gender)
+    if material is not None: modify_filter(filter_key="material", new_value=material)
+    if fit is not None: modify_filter(filter_key="fit", new_value=fit)
+    if brand is not None: modify_filter(filter_key="brand", new_value=brand)
+    if keyword is not None: modify_filter(filter_key="keyword", new_value=keyword)
     if page is not None: app.product_page = max(page, 1)  # If page is provided, set product_page
     if app.product_page < 1:  app.product_page = 1  # Ensure product_page is always at least 1
     start = (app.product_page - 1) * 15  # Calculate the start index for pagination
-    products_ = products.data  # Get products data
+    print(app.filters)
     context = {  # Prepare context data for template rendering
         "request": request,  # Request object
         "page": app.product_page,  # Current page number
         "default_img": default_img,  # Default image URL
         "is_feat": is_feat,  # Flag indicating if only featured products are requested
-        "products": random.sample(products.data, 15) if is_feat else products_[start: (start + 15)]
+        "products": random.sample(products.data, 15) if is_feat else apply_filters()[start: (start + 15)]
     }
     return templates.TemplateResponse("products-grid.html", context=context)
 

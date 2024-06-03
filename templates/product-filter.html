@@ -15,18 +15,23 @@
                         <div class="uk-flex uk-flex-wrap">
                             {% for item in genders %}
                             <a href hx-get="/product-filter?a_gender={{ item }}" hx-target="#product-filter"
-                               class="filtered uk-border-pill uk-link-reset uk-text-bold">{{ item }}</a>
+                               class="filtered uk-border-pill uk-link-reset uk-text-bold"
+                               _="on click fetch /products-grid?gender={{ item }} then
+                               put the result into #products-grid">{{ item }}</a>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load" hx-target="#products-grid">
+            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load"
+                 hx-target="#products-grid">
                 {% for item in selected_genders %}
                 <a href hx-get="/product-filter?r_gender={{ item }}" hx-target="#product-filter"
                    class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
                    onmouseover="this.style.backgroundColor='#d62828'"
-                   onmouseleave="this.style.backgroundColor='#EFCB68'">{{ item }}</a>
+                   onmouseleave="this.style.backgroundColor='#EFCB68'"
+                   _="on click fetch /products-grid?gender={{ item }} then
+                   put the result into #products-grid">{{ item }}</a>
                 {% endfor %}
             </div>
             <hr>
@@ -40,18 +45,23 @@
                         <div class="uk-flex uk-flex-wrap">
                             {% for item in sizes %}
                             <a href hx-get="/product-filter?a_size={{ item }}" hx-target="#product-filter"
-                               class="filtered uk-border-pill uk-link-reset uk-text-bold">{{ item }}</a>
+                               class="filtered uk-border-pill uk-link-reset uk-text-bold"
+                               _="on click fetch /products-grid?size={{ item }} then
+                               put the result into #products-grid">{{ item }}</a>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load" hx-target="#products-grid">
+            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load"
+                 hx-target="#products-grid">
                 {% for item in selected_sizes %}
                 <a href hx-get="/product-filter?r_size={{ item }}" hx-target="#product-filter"
                    class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
                    onmouseover="this.style.backgroundColor='#d62828'"
-                   onmouseleave="this.style.backgroundColor='#EFCB68'">{{ item }}</a>
+                   onmouseleave="this.style.backgroundColor='#EFCB68'"
+                   _="on click fetch /products-grid?size={{ item }} then
+                   put the result into #products-grid">{{ item }}</a>
                 {% endfor %}
             </div>
             <hr>
@@ -65,18 +75,23 @@
                         <div class="uk-flex uk-flex-wrap">
                             {% for item in materials %}
                             <a href hx-get="/product-filter?a_material={{ item }}" hx-target="#product-filter"
-                               class="filtered uk-border-pill uk-link-reset uk-text-bold">{{ item }}</a>
+                               class="filtered uk-border-pill uk-link-reset uk-text-bold"
+                               _="on click fetch /products-grid?material={{ item }} then
+                               put the result into #products-grid">{{ item }}</a>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load" hx-target="#products-grid">
+            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load"
+                 hx-target="#products-grid">
                 {% for item in selected_materials %}
                 <a href hx-get="/product-filter?r_material={{ item }}" hx-target="#product-filter"
                    class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
                    onmouseover="this.style.backgroundColor='#d62828'"
-                   onmouseleave="this.style.backgroundColor='#EFCB68'">{{ item }}</a>
+                   onmouseleave="this.style.backgroundColor='#EFCB68'"
+                   _="on click fetch /products-grid?material={{ item }} then
+                   put the result into #products-grid">{{ item }}</a>
                 {% endfor %}
             </div>
             <hr>
@@ -90,18 +105,23 @@
                         <div class="uk-flex uk-flex-wrap">
                             {% for item in fits %}
                             <a href hx-get="/product-filter?a_fit={{ item }}" hx-target="#product-filter"
-                               class="filtered uk-border-pill uk-link-reset uk-text-bold">{{ item }}</a>
+                               class="filtered uk-border-pill uk-link-reset uk-text-bold"
+                               _="on click fetch /products-grid?fit={{ item }} then
+                               put the result into #products-grid">{{ item }}</a>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load" hx-target="#products-grid">
+            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load"
+                 hx-target="#products-grid">
                 {% for item in selected_fits %}
                 <a href hx-get="/product-filter?r_fit={{ item }}" hx-target="#product-filter"
                    class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
                    onmouseover="this.style.backgroundColor='#d62828'"
-                   onmouseleave="this.style.backgroundColor='#EFCB68'">{{ item }}</a>
+                   onmouseleave="this.style.backgroundColor='#EFCB68'"
+                   _="on click fetch /products-grid?fit={{ item }} then
+                   put the result into #products-grid">{{ item }}</a>
                 {% endfor %}
             </div>
             <hr>
@@ -115,18 +135,23 @@
                         <div class="uk-flex uk-flex-wrap">
                             {% for item in brands %}
                             <a href hx-get="/product-filter?a_brand={{ item }}" hx-target="#product-filter"
-                               class="filtered uk-border-pill uk-link-reset uk-text-bold">{{ item }}</a>
+                               class="filtered uk-border-pill uk-link-reset uk-text-bold"
+                               _="on click fetch /products-grid?brand={{ item }} then
+                               put the result into #products-grid">{{ item }}</a>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load" hx-target="#products-grid">
+            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load"
+                 hx-target="#products-grid">
                 {% for item in selected_brands %}
                 <a href hx-get="/product-filter?r_brand={{ item }}" hx-target="#product-filter"
                    class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
                    onmouseover="this.style.backgroundColor='#d62828'"
-                   onmouseleave="this.style.backgroundColor='#EFCB68'">{{ item }}</a>
+                   onmouseleave="this.style.backgroundColor='#EFCB68'"
+                   _="on click fetch /products-grid?brand={{ item }} then
+                   put the result into #products-grid">{{ item }}</a>
                 {% endfor %}
             </div>
             <hr>
@@ -140,18 +165,23 @@
                         <div class="uk-flex uk-flex-wrap">
                             {% for item in keywords %}
                             <a href hx-get="/product-filter?a_keyword={{ item }}" hx-target="#product-filter"
-                               class="filtered uk-border-pill uk-link-reset uk-text-bold">{{ item }}</a>
+                               class="filtered uk-border-pill uk-link-reset uk-text-bold"
+                               _="on click fetch /products-grid?keyword={{ item }} then
+                               put the result into #products-grid">{{ item }}</a>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load" hx-target="#products-grid">
+            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load"
+                 hx-target="#products-grid">
                 {% for item in selected_keywords %}
                 <a href hx-get="/product-filter?r_keyword={{ item }}" hx-target="#product-filter"
                    class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
                    onmouseover="this.style.backgroundColor='#d62828'"
-                   onmouseleave="this.style.backgroundColor='#EFCB68'">{{ item }}</a>
+                   onmouseleave="this.style.backgroundColor='#EFCB68'"
+                   _="on click fetch /products-grid?keyword={{ item }} then
+                   put the result into #products-grid">{{ item }}</a>
                 {% endfor %}
             </div>
         </fieldset>
