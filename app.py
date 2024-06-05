@@ -1,9 +1,11 @@
 import random
+
+from bs4 import BeautifulSoup
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from bs4 import BeautifulSoup
+
 from data import categories, products, banners, default_img, sizes, collections, brands, genders, materials, fits, \
     keywords
 
@@ -17,8 +19,7 @@ templates.env.filters["prettify_html"] = lambda html_content: BeautifulSoup(html
 
 app.product_page = 0
 app.selected_sizes, app.selected_genders, app.selected_materials, app.selected_fits = [], [], [], []
-app.selected_brands, app.selected_keywords = [], []
-app.filters = [{'gender': []}, {'size': []}, {'material': []}, {'fit': []}, {'brand': []}, {'keyword': []}]
+app.selected_brands, app.selected_keywords, app.filters = [], [], []
 
 
 def filter_store(selection_rem: str, selection_add: str, stored_filter: str):
@@ -64,6 +65,9 @@ def modify_filter(filter_key, new_value):
     if filter_dict is not None:
         if new_value in filter_dict[filter_key]:
             filter_dict[filter_key].remove(new_value)
+            print("filter", filter_key, "length", len(filter_dict[filter_key]))
+            if not len(filter_dict[filter_key]):
+                app.filters = [f for f in app.filters if filter_key not in f]
         else:
             filter_dict[filter_key].append(new_value)
     else:
@@ -76,6 +80,8 @@ def apply_filters() -> list:
         for key, allowed_values in filter_dict.items():
             if key == "keywords":
                 filtered_products = [product for product in filtered_products if allowed_values in product[key]]
+            # elif key == "size":
+            #     filtered_products = [product for product in filtered_products if allowed_values]
             else:
                 filtered_products = [product for product in filtered_products if product[key] in allowed_values]
     return filtered_products
@@ -150,9 +156,10 @@ async def products_slider(request: Request):
 
 
 @app.get("/products-grid", response_class=HTMLResponse)
-async def products_grid(request: Request, page: int = None, is_feat: bool = False, gender: str = None, material: str =
-None, fit: str = None, brand: str = None, keyword: str = None):
+async def products_grid(request: Request, page: int = None, is_feat: bool = False, gender: str = None, size: str = None,
+                        material: str = None, fit: str = None, brand: str = None, keyword: str = None):
     if gender is not None: modify_filter(filter_key="gender", new_value=gender)
+    if size is not None: modify_filter(filter_key="size", new_value=size)
     if material is not None: modify_filter(filter_key="material", new_value=material)
     if fit is not None: modify_filter(filter_key="fit", new_value=fit)
     if brand is not None: modify_filter(filter_key="brand", new_value=brand)
