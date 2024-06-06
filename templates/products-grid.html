@@ -15,16 +15,20 @@
         </div>
     </div>
     {% endif %}
-    <div class="uk-flex uk-flex-wrap"
+    <div class="uk-flex uk-flex-wrap uk-flex-center"
         uk-scrollspy="cls: uk-animation-scale-up uk-transform-origin-top-center; target: .uk-card; delay: 25; repeat: true">
         {% for item in products %}
-            <div class="uk-card uk-card-small uk-border-rounded uk-width-1-3 uk-width-1-4@s uk-width-1-6@m">
+            <div class="uk-card uk-card-small" style="width: 133px;"
+                 _="on load get (window.outerWidth) as an Int
+                 if it is greater than 768
+                 then set my *width to 190px
+                 then add .uk-padding-small">
                 <a href="/product-detail?code={{ item.fullCode }}" class="uk-card-media-top">
                     <img src="{{ item.images[0].urls[0].url|default(default_img) }}" width="1024" height="1024" alt="">
                 </a>
                 <div class="uk-card-body">
                     <div class="uk-card-title"
-                         style="height: 56px; line-height: 1.2; font-size: 0.7em; overflow: hidden;">
+                         style="height: 52px; line-height: 1.2; font-size: 0.9em; overflow: hidden;">
                         {{ item.productName|default('No product name') }}
                     </div>
                     <div class="uk-flex uk-flex-wrap uk-flex-middle uk-margin-small"
