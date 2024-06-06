@@ -1,5 +1,7 @@
 import os
+
 from supabase import create_client, Client
+from supafunc.errors import FunctionsRelayError, FunctionsHttpError
 
 url: str = os.environ.get("SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_KEY")
@@ -30,11 +32,15 @@ banners = [
 
 categories = supabase.table("Categories").select("categoryCode", "categoryName", "children").execute()
 
-genders, materials, fits, keywords = [], [], [], []
+try:
+    resp = supabase.rpc("get_distinct_genders").execute()
+    genders = resp.data
+except (FunctionsRelayError, FunctionsHttpError) as exception:
+    err = exception.to_dict()
+    print(err.get("message"))
+
+materials, fits, keywords = [], [], []
 for product in products.data:
-    if product["gender"] is not None:
-        genders.append(product["gender"])
-        genders = list(set(genders))
     if product["material"] != "":
         materials.append(product["material"])
         materials = list(set(materials))
