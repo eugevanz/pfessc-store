@@ -1,7 +1,7 @@
 <div>
     {% if not is_feat %}
     <div class="uk-inline uk-flex-right uk-margin-bottom">
-        <a href class="uk-icon-button" uk-icon="settings"></a>
+        <a class="uk-icon-button" href uk-icon="settings"></a>
         <div uk-dropdown="mode: click">
             <form style="font-size: 0.7em;">
                 <div class="uk-flex uk-flex-wrap">
@@ -16,37 +16,40 @@
     </div>
     {% endif %}
     <div class="uk-flex uk-flex-wrap uk-flex-center"
-        uk-scrollspy="cls: uk-animation-scale-up uk-transform-origin-top-center; target: .uk-card; delay: 25; repeat: true">
+         uk-scrollspy="cls: uk-animation-scale-up uk-transform-origin-top-center; target: .uk-card; delay: 25; repeat: true">
         {% for item in products %}
-            <div class="uk-card uk-card-small" style="width: 133px;"
-                 _="on load get (window.outerWidth) as an Int
+        <div _="on load get (window.outerWidth) as an Int
                  if it is greater than 768
                  then set my *width to 190px
-                 then add .uk-padding-small">
-                <a href="/product-detail?code={{ item.fullCode }}" class="uk-card-media-top">
-                    <img src="{{ item.images[0].urls[0].url|default(default_img) }}" width="1024" height="1024" alt="">
-                </a>
-                <div class="uk-card-body">
-                    <div class="uk-card-title"
-                         style="height: 52px; line-height: 1.2; font-size: 0.9em; overflow: hidden;">
-                        {{ item.productName|default('No product name') }}
-                    </div>
-                    <div class="uk-flex uk-flex-wrap uk-flex-middle uk-margin-small"
-                         style="height: 18px; overflow: hidden;">
-                        {% for colour in item.variants|avail_colours %}
-                        <span class="uk-border-circle clr-brief" style="background-color: {{ colour|colour_filter }};">
+                 then add .uk-padding-small" class="uk-card uk-card-small"
+             style="width: 133px;">
+            <form id="prod-detail" action="/product-detail" method="post">
+                <input value="{{ item }}" name="product" type="hidden">
+                <button class="uk-card-media-top uk-button uk-button-link" type="submit">
+                    <img alt="" height="1024" src="{{ item.images[0].urls[0].url|default(default_img) }}" width="1024">
+                </button>
+            </form>
+            <div class="uk-card-body">
+                <div class="uk-card-title"
+                     style="height: 52px; line-height: 1.2; font-size: 0.9em; overflow: hidden;">
+                    {{ item.productName|default('No product name') }}
+                </div>
+                <div class="uk-flex uk-flex-wrap uk-flex-middle uk-margin-small"
+                     style="height: 18px; overflow: hidden;">
+                    {% for colour in item.variants|avail_colours %}
+                    <span class="uk-border-circle clr-brief" style="background-color: {{ colour|colour_filter }};">
                         </span>
-                        {% endfor %}
+                    {% endfor %}
+                </div>
+                <div class="uk-margin-small-top uk-flex uk-flex-middle uk-flex-between">
+                    <div class="uk-text-bold uk-text-nowrap"
+                         style="font-size: 0.8em;">
+                        {% if item.price %}R {{ item.price }}{% else %}Sold Out{% endif %}
                     </div>
-                    <div class="uk-margin-small-top uk-flex uk-flex-middle uk-flex-between">
-                        <div class="uk-text-bold uk-text-nowrap"
-                             style="font-size: 0.8em;">
-                            {% if item.price %}R {{ item.price }}{% else %}Sold Out{% endif %}
-                        </div>
-                        <a href="/add-to-cart/{{ item['simpleCode'] }}" class="uk-icon-button" uk-icon="cart"></a>
-                    </div>
+                    <a class="uk-icon-button" href="/add-to-cart/{{ item['simpleCode'] }}" uk-icon="cart"></a>
                 </div>
             </div>
+        </div>
         {% endfor %}
     </div>
     {% if not is_feat %}
@@ -61,9 +64,9 @@
             </li>
             {% endif %}
             <li>
-                <input class="uk-input uk-form-width-small uk-form-large uk-text-center" type="text"
-                       value="{{ page }}" name="page" aria-label="Page" hx-get="/products-grid"
-                       hx-trigger="keyup changed delay:1s" hx-target="#products-grid">
+                <input aria-label="Page" class="uk-input uk-form-width-small uk-form-large uk-text-center"
+                       hx-get="/products-grid" hx-target="#products-grid" hx-trigger="keyup changed delay:1s" name="page"
+                       type="text" value="{{ page }}">
             </li>
             {% if products %}
             <li>

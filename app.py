@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from data import categories, products, banners, default_img, sizes, collections, brands, genders, materials, fits, \
-    keywords
+    keywords, random_products
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -99,7 +99,7 @@ def colour_filter(colour: str) -> str:
                "MAROON": "#800000", "AQUA": "#89CFF0", "OCEAN BLUE": "#0059b3", "CREAM": "#FFFDD0",
                "LIGHT BLUE": "#89CFF0", "WHITE BLACK": "#FAF9F6", "WHITE LIGHT BLUE": "#F0FFFF", "OLIVE": "#808000",
                "DARK BLUE": "#00008B", "BROWN OLD": "#6E260E", "WHITE NAVY": "#B6D0E2", "BROWN": "#8B4513",
-               "BLACK RED": "#FBFCFC"}
+               "BLACK RED": "#FBFCFC", "Light Grey": "#d3d3d3", "NAVY NAVY": "#000080", "DARK RED": "#8B0000"}
     return colours[colour]
 
 
@@ -173,7 +173,7 @@ async def products_grid(request: Request, page: int = None, is_feat: bool = Fals
         "page": app.product_page,  # Current page number
         "default_img": default_img,  # Default image URL
         "is_feat": is_feat,  # Flag indicating if only featured products are requested
-        "products": random.sample(products.data, 15) if is_feat else apply_filters()[start: (start + 15)]
+        "products": random_products.data if is_feat else apply_filters()[start: (start + 15)]
     }
     return templates.TemplateResponse("products-grid.html", context=context)
 
@@ -207,12 +207,14 @@ async def product_filter(request: Request, a_size: str = None, r_size: str = Non
     return templates.TemplateResponse("product-filter.html", context=context)
 
 
-@app.get("/product-detail", response_class=HTMLResponse)
-async def product_detail(request: Request, code: str):
+@app.post("/product-detail", response_class=HTMLResponse)
+async def product_detail(request: Request):
+    form_data = await request.form()
+    product_data = form_data.get("product")
     context = {
         "request": request,
-        "product": next((product for product in products.data if product.get("fullCode") == code), None),
-        "recommended": random.sample(products.data, 15)
+        "product": eval(product_data),
+        "recommended": random_products.data
     }
     return templates.TemplateResponse("product-detail.html", context=context)
 

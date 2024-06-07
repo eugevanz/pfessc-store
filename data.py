@@ -7,6 +7,13 @@ url: str = os.environ.get("SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
 
+random_products = supabase.table("random_products").select("*").limit(15).execute()
+
+selected_product = lambda code: supabase.table("Products").select(
+    "fullCode", "productName", "brand", "images", "variants", "keywords", "description", "categories", "gender",
+    "material", "fit"
+).eq("fullCode", code).execute()
+
 products = supabase.table("Products").select(
     "fullCode", "productName", "brand", "images", "variants", "keywords", "description", "categories", "gender",
     "material", "fit"
@@ -33,33 +40,14 @@ banners = [
 categories = supabase.table("Categories").select("categoryCode", "categoryName", "children").execute()
 
 try:
-    resp = supabase.rpc("get_distinct_genders").execute()
-    genders = resp.data
+    genders = [r for r in supabase.rpc("get_distinct_genders").execute().data if r]
+    materials = [r for r in supabase.rpc("get_distinct_materials").execute().data if r]
+    fits = [r for r in supabase.rpc("get_distinct_fits").execute().data if r]
+    keywords = [r["keyword"] for r in supabase.rpc("get_distinct_keywords").execute().data if r]
+    sizes = [r for r in supabase.rpc("get_distinct_sizes").execute().data if r]
 except (FunctionsRelayError, FunctionsHttpError) as exception:
     err = exception.to_dict()
     print(err.get("message"))
-
-materials, fits, keywords = [], [], []
-for product in products.data:
-    if product["material"] != "":
-        materials.append(product["material"])
-        materials = list(set(materials))
-    if product["fit"] != "":
-        fits.append(product["fit"])
-        fits = list(set(fits))
-    if product["keywords"] != "NULL" or product["keywords"] != "":
-        parts = product["keywords"].split(';')
-        for part in parts:
-            keywords.extend(part.split(","))
-        keywords = list(set(keywords))
-        keywords = [item for item in keywords if item.strip()]
-
-sizes = {}
-for product in products.data:
-    for variant in product["variants"]:
-        code_size = variant["codeSize"]
-        if code_size is not None:
-            sizes[code_size] = sizes.get(code_size, 0) + 1
 
 collections = set()
 for product in products.data:
