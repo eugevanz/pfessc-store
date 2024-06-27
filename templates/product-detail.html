@@ -50,7 +50,7 @@
                                 'WHITE BLACK', 'WHITE LIGHT BLUE', 'WHITE', 'CYAN', 'CREAM']
                                 remove .uk-light from the closest <label/>
                                 if my innerHTML is in ['None', 'SOLID WHITE', 'NATURAL', 'TRANSPARENT', 'WHITE BLACK',
-                                'WHITE', 'CREAM']
+                                'WHITE', 'CREAM', 'BLACK WHITE']
                                 then set *border-color of the closest <label/> to '#818589'
                                 then set *border-width of the closest <label/> to 1px
                                 then set *border-style of the closest <label/> to 'solid'" style="font-size: 0.7em;">{{ item }}</span>
@@ -99,23 +99,28 @@
                 </p>
             </form>
         </div>
-        <div class="uk-text-muted uk-text-bold uk-padding" style="font-size: 0.8em; margin: 3px;">
-            Recommendations
-        </div>
-        <div class="uk-slider-container-offset" uk-slider="autoplay: true; autoplay-interval: 3000">
+        <div class="uk-slider-container-offset uk-margin-xlarge-top"
+             uk-slider="autoplay: true; autoplay-interval: 3000">
             <div class="uk-position-relative uk-visible-toggle" tabindex="-1">
                 <div class="uk-slider-items uk-child-width-1-3 uk-child-width-1-5@s uk-child-width-1-6@m
                 uk-child-width-1-7@l uk-grid">
                     {% for item in recommended %}
                     <div>
                         <div class="uk-card uk-card-small uk-border-rounded uk-width-medium">
-                            <form action="/product-detail" id="prod-detail" method="post">
-                                <input name="product" type="hidden" value="{{ item }}">
-                                <button class="uk-card-media-top uk-button uk-button-link" type="submit">
-                                    <img alt="" height="1024"
-                                         src="{{ item.images[0].urls[0].url|default(default_img) }}" width="1024">
-                                </button>
-                            </form>
+                            <div class="uk-inline">
+                                <form action="/product-detail" id="prod-detail" method="post">
+                                    <input name="product" type="hidden" value="{{ item }}">
+                                    <button class="uk-card-media-top uk-button uk-button-link" type="submit">
+                                        <img alt="" height="1024"
+                                             src="{{ item.images[0].urls[0].url|default(default_img) }}" width="1024">
+                                    </button>
+                                </form>
+                                <div class="uk-position-bottom uk-light">
+                                    <div class="uk-text-bold uk-text-nowrap priced uk-border-pill uk-width-expand">
+                                        {% if item.price %}R {{ item.price }}{% else %}Sold Out{% endif %}
+                                    </div>
+                                </div>
+                            </div>
                             <div class="uk-card-body">
                                 <div class="uk-card-title"
                                      style="height: 40px; line-height: 1.2; font-size: 0.7em; overflow: hidden;">
@@ -127,12 +132,6 @@
                                     <span class="uk-border-circle clr-brief"
                                           style="background-color: {{ colour|colour_filter }};"></span>
                                     {% endfor %}
-                                </div>
-                                <div class="uk-margin-small-top uk-flex uk-flex-middle uk-flex-between">
-                                    <div class="uk-text-bold uk-text-nowrap"
-                                         style="font-size: 0.6em;">
-                                        {% if item.price %}R {{ item.price }}{% else %}Sold Out{% endif %}
-                                    </div>
                                 </div>
                             </div>
                         </div>

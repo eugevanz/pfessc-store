@@ -1,53 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'products-slider.html' %}
-<div class="uk-section">
-    <div class="uk-container">
-        <p class="uk-text-lead uk-text-center uk-margin-large uk-text-uppercase" style="letter-spacing: 3px;">
-            Featured products
-            <a href="/products" class="uk-button uk-light uk-button-small uk-border-pill"
-               style="background-color: #2B3A67;">Shop all</a>
-        </p>
-        <div hx-get="/products-grid?is_feat=True" hx-trigger="load"></div>
-    </div>
-</div>
+{% include 'suppliers-grid.html' %}
+{% include 'feature-slider.html' %}
+{% include 'feature-slider.html' %}
+{% include 'feature-slider.html' %}
 <div class="uk-section" style="background: #e1efe6;">
-    <div class="uk-container">
-        <p class="uk-text-lead uk-text-center uk-margin-large uk-text-uppercase" style="letter-spacing: 3px;">
-            Collections
-            <a href="/collections" class="uk-button uk-light uk-button-small uk-border-pill"
-               style="background-color: #2B3A67;">See all</a>
-        </p>
-        <div hx-get="/collections-grid?is_feat=True" hx-trigger="load"></div>
-    </div>
+    {% include 'collections-slider.html' %}
 </div>
-<div class="uk-section" style="background-color: #EFCB68;">
-    <div class="uk-container">
-        <div class="uk-card uk-grid-collapse uk-child-width-1-2@m uk-margin" data-uk-grid
-             style="background-color: #EFCB68;">
-            <div class="uk-card-media-left uk-cover-container">
-                <img src="https://inyllwqsghzahwjosayv.supabase.co/storage/v1/object/public/Misc/BRANDING-6_b2299235-2b1e-4173-b041-6119e42dc162.png?t=2024-05-07T06%3A14%3A14.089Z"
-                     alt="" uk-cover>
-                <canvas width="600" height="600"></canvas>
-            </div>
-            <div class="uk-margin-auto-vertical">
-                <div class="uk-card-body">
-                    <h3 class="uk-card-title">Branding in 24 hours</h3>
-                    <h1 class="uk-text-bold uk-light">HAVE AN EMERGENCY or UNPLANNED ORDER?</h1>
-                    <p class="uk-text-bold uk-width-large">Experience Lightning-Fast Branding on over 170 Popular
-                        Products with LOGO24!</p>
-                    <p>LOGO24 is an extraordinary new initiative that offers "next day" turnaround including branding on
-                        over 170 of our most popular products when you need branded products super-fast!</p>
-                    <a href="#" class="uk-button uk-button-secondary">LOGO24 items</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="uk-section">
-    <div class="uk-container">
-        <p class="uk-text-lead uk-text-center uk-margin-large uk-text-uppercase" style="letter-spacing: 3px;">Brands</p>
-<!--        <div hx-get="/suppliers-grid" hx-trigger="load"></div>-->
+<div class="uk-section uk-flex" style="background-color: #FFC000">
+    <div class="uk-card uk-card-large uk-card-body uk-margin-auto">
+        <h3 class="uk-card-title uk-text-bold">HAVE AN EMERGENCY or UNPLANNED ORDER?</h3>
+        <p class="uk-text-bold uk-width-large@s">Experience Lightning-Fast Branding on over 170 Popular
+            Products with LOGO24!</p>
+        <p class="uk-width-large@s">LOGO24 is an extraordinary new initiative that offers "next day" turnaround
+            including branding on
+            over 170 of our most popular products when you need branded products super-fast!</p>
+        <a class="uk-button uk-button-secondary uk-border-pill uk-margin-top" href="#">LOGO24 items</a>
     </div>
 </div>
 {% endblock %}

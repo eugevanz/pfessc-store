@@ -1,189 +1,81 @@
-<div>
-    <form class="uk-search uk-search-default uk-margin-large-bottom">
-        <span uk-search-icon></span>
-        <input class="uk-search-input" type="search" placeholder="Search" aria-label="Search">
-    </form>
-    <form>
-        <fieldset class="uk-fieldset">
-            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-bottom">
-                <div style="font-size: 0.7em;">Gender</div>
-                <div class="uk-inline">
-                    <a href><span uk-drop-parent-icon></span></a>
-                    <div class="uk-card uk-card-body uk-card-default uk-width-xlarge uk-overflow-auto uk-height-medium"
-                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">
-                        <p class="uk-text-bold">Add a gender</p>
-                        <div class="uk-flex uk-flex-wrap">
-                            {% for item in genders %}
-                            <a href hx-get="/product-filter?a_gender={{ item }}" hx-target="#product-filter"
-                               class="filtered uk-border-pill uk-link-reset uk-text-bold"
-                               _="on click fetch /products-grid?gender={{ item }} then
-                               put the result into #products-grid">{{ item }}</a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load"
-                 hx-target="#products-grid">
-                {% for item in selected_genders %}
-                <a href hx-get="/product-filter?r_gender={{ item }}" hx-target="#product-filter"
-                   class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
-                   onmouseover="this.style.backgroundColor='#d62828'"
-                   onmouseleave="this.style.backgroundColor='#EFCB68'"
-                   _="on click fetch /products-grid?gender={{ item }} then
-                   put the result into #products-grid">{{ item }}</a>
+<form action="/product-filter/" class="uk-modal-dialog uk-padding">
+    <div class="uk-modal-body" id="prod-filter" uk-grid uk-overflow-auto>
+        <div class="uk-inline">
+            <div style="font-size: 0.7em; padding: 8px">Gender</div>
+            <div class="uk-flex uk-flex-wrap">
+                {% for item in genders %}
+                <label class="filtered uk-border-pill uk-text-bold">
+                    <input class="uk-checkbox uk-border-circle" name="gender" style="border-color: white;"
+                           type="checkbox" value="{{ item }}"> {{ item }}
+                </label>
                 {% endfor %}
             </div>
-            <hr>
-            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-bottom">
-                <div style="font-size: 0.7em;">Sizes</div>
-                <div class="uk-inline">
-                    <a href><span uk-drop-parent-icon></span></a>
-                    <div class="uk-card uk-card-body uk-card-default uk-width-xlarge uk-overflow-auto uk-height-medium"
-                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">
-                        <p class="uk-text-bold">Add a size</p>
-                        <div class="uk-flex uk-flex-wrap">
-                            {% for item in sizes %}
-                            <a href hx-get="/product-filter?a_size={{ item }}" hx-target="#product-filter"
-                               class="filtered uk-border-pill uk-link-reset uk-text-bold"
-                               _="on click fetch /products-grid?size={{ item }} then
-                               put the result into #products-grid">{{ item }}</a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load"
-                 hx-target="#products-grid">
-                {% for item in selected_sizes %}
-                <a href hx-get="/product-filter?r_size={{ item }}" hx-target="#product-filter"
-                   class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
-                   onmouseover="this.style.backgroundColor='#d62828'"
-                   onmouseleave="this.style.backgroundColor='#EFCB68'"
-                   _="on click fetch /products-grid?size={{ item }} then
-                   put the result into #products-grid">{{ item }}</a>
+        </div>
+        <div class="uk-inline">
+            <div style="font-size: 0.7em; padding: 8px">Sizes</div>
+            <div class="uk-flex uk-flex-wrap">
+                {% for item in sizes %}
+                <label class="filtered uk-border-pill uk-text-bold">
+                    <input class="uk-checkbox uk-border-circle" name="size" style="border-color: white;"
+                           type="checkbox" value="{{ item }}">
+                    {{ item }}
+                </label>
                 {% endfor %}
             </div>
-            <hr>
-            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-bottom">
-                <div style="font-size: 0.7em;">Material</div>
-                <div class="uk-inline">
-                    <a href><span uk-drop-parent-icon></span></a>
-                    <div class="uk-card uk-card-body uk-card-default uk-width-xlarge uk-overflow-auto uk-height-medium"
-                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">
-                        <p class="uk-text-bold">Add a material</p>
-                        <div class="uk-flex uk-flex-wrap">
-                            {% for item in materials %}
-                            <a href hx-get="/product-filter?a_material={{ item }}" hx-target="#product-filter"
-                               class="filtered uk-border-pill uk-link-reset uk-text-bold"
-                               _="on click fetch /products-grid?material={{ item }} then
-                               put the result into #products-grid">{{ item }}</a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load"
-                 hx-target="#products-grid">
-                {% for item in selected_materials %}
-                <a href hx-get="/product-filter?r_material={{ item }}" hx-target="#product-filter"
-                   class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
-                   onmouseover="this.style.backgroundColor='#d62828'"
-                   onmouseleave="this.style.backgroundColor='#EFCB68'"
-                   _="on click fetch /products-grid?material={{ item }} then
-                   put the result into #products-grid">{{ item }}</a>
+        </div>
+        <div class="uk-inline">
+            <div style="font-size: 0.7em; padding: 8px">Material</div>
+            <div class="uk-flex uk-flex-wrap">
+                {% for item in materials %}
+                <label class="filtered uk-border-pill uk-text-bold">
+                    <input class="uk-checkbox uk-border-circle" name="material" style="border-color: white;"
+                           type="checkbox" value="{{ item }}">
+                    {{ item }}
+                </label>
                 {% endfor %}
             </div>
-            <hr>
-            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-bottom">
-                <div style="font-size: 0.7em;">Fit</div>
-                <div class="uk-inline">
-                    <a href><span uk-drop-parent-icon></span></a>
-                    <div class="uk-card uk-card-body uk-card-default uk-width-xlarge uk-overflow-auto uk-height-medium"
-                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">
-                        <p class="uk-text-bold">Add a fit</p>
-                        <div class="uk-flex uk-flex-wrap">
-                            {% for item in fits %}
-                            <a href hx-get="/product-filter?a_fit={{ item }}" hx-target="#product-filter"
-                               class="filtered uk-border-pill uk-link-reset uk-text-bold"
-                               _="on click fetch /products-grid?fit={{ item }} then
-                               put the result into #products-grid">{{ item }}</a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load"
-                 hx-target="#products-grid">
-                {% for item in selected_fits %}
-                <a href hx-get="/product-filter?r_fit={{ item }}" hx-target="#product-filter"
-                   class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
-                   onmouseover="this.style.backgroundColor='#d62828'"
-                   onmouseleave="this.style.backgroundColor='#EFCB68'"
-                   _="on click fetch /products-grid?fit={{ item }} then
-                   put the result into #products-grid">{{ item }}</a>
+        </div>
+        <div class="uk-inline">
+            <div style="font-size: 0.7em; padding: 8px">Fit</div>
+            <div class="uk-flex uk-flex-wrap">
+                {% for item in fits %}
+                <label class="filtered uk-border-pill uk-text-bold">
+                    <input class="uk-checkbox uk-border-circle" name="fit" style="border-color: white;" type="checkbox"
+                           value="{{ item }}">
+                    {{ item }}
+                </label>
                 {% endfor %}
             </div>
-            <hr>
-            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-bottom">
-                <div style="font-size: 0.7em;">Brand</div>
-                <div class="uk-inline">
-                    <a href><span uk-drop-parent-icon></span></a>
-                    <div class="uk-card uk-card-body uk-card-default uk-width-xlarge uk-overflow-auto uk-height-medium"
-                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">
-                        <p class="uk-text-bold">Add a brand</p>
-                        <div class="uk-flex uk-flex-wrap">
-                            {% for item in brands %}
-                            <a href hx-get="/product-filter?a_brand={{ item }}" hx-target="#product-filter"
-                               class="filtered uk-border-pill uk-link-reset uk-text-bold"
-                               _="on click fetch /products-grid?brand={{ item }} then
-                               put the result into #products-grid">{{ item }}</a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load"
-                 hx-target="#products-grid">
-                {% for item in selected_brands %}
-                <a href hx-get="/product-filter?r_brand={{ item }}" hx-target="#product-filter"
-                   class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
-                   onmouseover="this.style.backgroundColor='#d62828'"
-                   onmouseleave="this.style.backgroundColor='#EFCB68'"
-                   _="on click fetch /products-grid?brand={{ item }} then
-                   put the result into #products-grid">{{ item }}</a>
+        </div>
+        <div class="uk-inline">
+            <div style="font-size: 0.7em; padding: 8px">Brand</div>
+            <div class="uk-flex uk-flex-wrap">
+                {% for item in brands %}
+                <label class="filtered uk-border-pill uk-text-bold">
+                    <input class="uk-checkbox uk-border-circle" name="brand" style="border-color: white;"
+                           type="checkbox" value="{{ item }}">
+                    {{ item }}
+                </label>
                 {% endfor %}
             </div>
-            <hr>
-            <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-small-bottom">
-                <div style="font-size: 0.7em;">Keywords</div>
-                <div class="uk-inline">
-                    <a href><span uk-drop-parent-icon></span></a>
-                    <div class="uk-card uk-card-body uk-card-default uk-width-xlarge uk-overflow-auto uk-height-medium"
-                         uk-drop="mode: click; animation: slide-top; animate-out: true; duration: 100">
-                        <p class="uk-text-bold">Add a keyword</p>
-                        <div class="uk-flex uk-flex-wrap">
-                            {% for item in keywords %}
-                            <a href hx-get="/product-filter?a_keyword={{ item }}" hx-target="#product-filter"
-                               class="filtered uk-border-pill uk-link-reset uk-text-bold"
-                               _="on click fetch /products-grid?keyword={{ item }} then
-                               put the result into #products-grid">{{ item }}</a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="uk-flex uk-flex-wrap" hx-get="/products-grid?page=1" hx-trigger="load"
-                 hx-target="#products-grid">
-                {% for item in selected_keywords %}
-                <a href hx-get="/product-filter?r_keyword={{ item }}" hx-target="#product-filter"
-                   class="filtered uk-border-pill uk-link-reset uk-text-truncate uk-text-bold"
-                   onmouseover="this.style.backgroundColor='#d62828'"
-                   onmouseleave="this.style.backgroundColor='#EFCB68'"
-                   _="on click fetch /products-grid?keyword={{ item }} then
-                   put the result into #products-grid">{{ item }}</a>
+        </div>
+        <div class="uk-inline">
+            <div style="font-size: 0.7em; padding: 8px">Keywords</div>
+            <div class="uk-flex uk-flex-wrap">
+                {% for item in keywords %}
+                <label class="filtered uk-border-pill uk-text-bold">
+                    <input class="uk-checkbox uk-border-circle" name="keywords" style="border-color: white;"
+                           type="checkbox" value="{{ item }}">
+                    {{ item }}
+                </label>
                 {% endfor %}
             </div>
-        </fieldset>
-    </form>
-</div>
+        </div>
+    </div>
+    <div class="uk-modal-footer uk-text-right">
+        <button _="on click hide #products with opacity then call UIkit.modal(#product-filter-modal).hide()"
+                class="uk-button uk-light uk-button-small uk-border-pill"
+                style="background-color: #2B3A67;" type="submit">Save
+        </button>
+    </div>
+</form>

@@ -1,14 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<div id="products" class="uk-section" _="on load call me.scrollIntoView({behavior: 'smooth'})">
+<div _="on load call me.scrollIntoView({behavior: 'smooth'})" class="uk-section" id="products"
+     style="transition: all 2000ms ease-out">
     <div class="uk-container">
         <p class="uk-text-lead uk-text-center uk-margin-large uk-text-uppercase" style="letter-spacing: 3px;">Shop all
             products</p>
-        <div class="uk-grid-large" uk-grid>
-            <div id="product-filter" class="uk-width-1-6@l uk-width-1-5@m uk-width-1-4@s uk-visible@s"
-                 hx-get="/product-filter" hx-trigger="load"></div>
-            <div id="products-grid" class="uk-width-expand" hx-get="/products-grid" hx-trigger="load"></div>
+        <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-large">
+            <div class="uk-inline uk-flex-right">
+                <a class="uk-button uk-button-secondary uk-border-pill uk-text-nowrap" href="#product-filter-modal"
+                   uk-toggle>
+                    <span uk-icon="icon: settings; ratio: 0.8"></span>
+                    <span class="uk-text-bold uk-visible@s" style="margin-left: 4px; font-size: 0.7em">Filter</span>
+                </a>
+                <div class="uk-modal-container" id="product-filter-modal" uk-modal="bg-close: false">
+                    {% include 'product-filter.html' %}
+                </div>
+            </div>
+            <form class="uk-search uk-search-default uk-width-expand" style="margin-left:8px">
+                <span uk-search-icon></span>
+                <input aria-label="Search" class="uk-search-input uk-border-pill" placeholder="Search"
+                       type="search">
+            </form>
         </div>
+        {% include 'products-grid.html' %}
     </div>
 </div>
 {% endblock %}

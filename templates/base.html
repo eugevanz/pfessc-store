@@ -3,18 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <meta content="#e1efe6" name="theme-color">
+    <meta content="#FFFFFF" name="theme-color">
     <title>PFESSC Branding</title>
-    <link href="{{ url_for('static', path='css/uikit.min.css') }}" rel="stylesheet"/>
-    <link href="{{ url_for('static', path='css/style.css') }}" rel="stylesheet"/>
-    <script src="{{ url_for('static', path='js/htmx.min.js') }}"></script>
-    <script src="{{ url_for('static', path='js/hyperscript.min.js') }}"></script>
-    <script src="{{ url_for('static', path='js/uikit.min.js') }}"></script>
-    <script src="{{ url_for('static', path='js/uikit-icons.min.js') }}"></script>
+    <link href="{{ url_for('static', filename='css/uikit.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet"/>
+    <script src="{{ url_for('static', filename='js/htmx.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/hyperscript.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/uikit.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/uikit-icons.min.js') }}"></script>
     <style>
+        .uk-button {
+            letter-spacing: 3px;
+        }
+        .priced {
+            background-color: #141414; font-size: 0.7em; padding: 4px; padding-left: 12px; padding-right: 12px;
+            margin: 6px; margin-left: 10px; opacity: 0.8;
+        }
         .filtered {
-            background-color: #EFCB68; font-size: 0.7em; padding: 4px; padding-left: 12px; padding-right: 12px;
-            margin-right: 8px; margin-bottom: 8px;
+            background-color: #EFCB68; font-size: 0.7em; padding: 4px 12px 2px 4px; margin-right: 8px;
+            margin-bottom: 8px;
         }
         .options {
             font-size: 0.7em; padding: 4px; padding-right: 12px; margin: 3px;
@@ -27,6 +34,14 @@
         }
         input[type="number"] {
             -moz-appearance: textfield;
+        }
+        @keyframes slide {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-100%);
+            }
         }
     </style>
 </head>
@@ -67,7 +82,7 @@
                     <li>
                         <a class="uk-text-nowrap" href="/">Home</a>
                     </li>
-                    {% for item in categories_4 %}
+                    {% for item in categories %}
                     <li>
                         <a class="uk-text-nowrap" href="#">{{ item['categoryName'] }}</a>
                         <div uk-dropdown="mode: click">
